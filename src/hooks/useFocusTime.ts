@@ -4,7 +4,7 @@ import { timerStateAtom, isRunning } from '@/atoms/taskAtoms';
 import pathname from '@/router/Router';
 
 const useFocusTime = () => {
-  const [focusTime, setFocusTime] = useState<number>(0);
+  const [focusTime, setFocusTime] = useState<number>(0); //
   const focusRef = useRef<NodeJS.Timeout | null>(null);
   const state = useAtomValue(timerStateAtom);
   const running = useAtomValue(isRunning);
@@ -20,17 +20,16 @@ const useFocusTime = () => {
   };
 
   useEffect(() => {
+    clearInterval(focusRef.current!);
     function checkAndStart() {
-      if (
-        document.visibilityState === 'visible' &&
-        isOnFocusPage() &&
-        state === 'work' &&
-        running
-      ) {
-        if (!focusRef.current) {
+      if (state === 'work' && running) {
+        if (document.visibilityState === 'visible' && isOnFocusPage()) {
+          setFocusTime((prev) => prev - 1); // 修正countdownTimer 0之後還會跑一秒確認狀態<=0，問老師是否可以這樣直接暴力解？
           focusRef.current = setInterval(() => {
-            setFocusTime((prevTime) => prevTime + 1);
+            setFocusTime((prev: number) => prev + 1);
           }, 1000);
+        } else {
+          clearFocusInterval();
         }
       } else {
         clearFocusInterval();
@@ -47,7 +46,7 @@ const useFocusTime = () => {
       window.removeEventListener('popstate', checkAndStart);
       clearFocusInterval();
     };
-  }, [state, running, window.location.pathname]);
+  }, [state, running]);
 
   return focusTime;
 };

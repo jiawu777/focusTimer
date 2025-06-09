@@ -29,8 +29,8 @@ const DEFAULT_TASK = 'Time to focus!';
 const DEFAULT_estimateCycle = 1;
 // const DEFAULT_WORKTIME = 25 * 60;
 // const DEFAULT_BREAKTIME = 5 * 60;
-const DEFAULT_WORKTIME = 5;
-const DEFAULT_BREAKTIME = 3;
+const DEFAULT_WORKTIME = 3;
+const DEFAULT_BREAKTIME = 1;
 const DEFAULT_BREAKTEXT = 'Break time!';
 
 // default

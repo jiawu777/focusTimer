@@ -7,7 +7,7 @@
     height: 100vh;
     background: rgba(30, 30, 30, 0.5);
     display: flex;
-    align-items: center;
+    align-items: flex-start; // Stick to top after animation
     justify-content: center;
     z-index: 1000;
   }
@@ -20,7 +20,8 @@
     min-width: 320px;
     max-width: 90vw;
     text-align: center;
-    animation: modalFadeIn 0.3s;
+    animation: modalDropFromTop 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    margin-top: 40px; // Space from the very top
   }
 
   &__h2 {
@@ -45,10 +46,10 @@
     background: #1565c0;
   }
 
-  @keyframes modalFadeIn {
+  @keyframes modalDropFromTop {
     from {
       opacity: 0;
-      transform: translateY(40px) scale(0.98);
+      transform: translateY(-80px) scale(0.98);
     }
     to {
       opacity: 1;

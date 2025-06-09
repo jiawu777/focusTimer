@@ -33,8 +33,8 @@ const useTimer = () => {
         });
       }, 1000);
     } else {
-      clearInterval(timerRef.current!);
       setRunning(false);
+      clearInterval(timerRef.current!);
     }
   }, [running]);
 

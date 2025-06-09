@@ -1,6 +1,7 @@
 import { useAtomValue } from 'jotai';
 import { currentTaskAtom, DEFAULT_BREAKTEXT, timerStateAtom, isRunning } from '@/atoms/taskAtoms';
 import { useTimer } from '@/hooks/useTimer';
+import { useSecTrans } from '@/hooks/useSecTrans';
 import './Countdown.scss';
 
 const Countdown = () => {
@@ -11,8 +12,7 @@ const Countdown = () => {
     reset: 'Reset',
     skip: 'Skip',
   };
-  const minDisplay = String(Math.floor(timer / 60)).padStart(2, '0');
-  const secDisplay = String(Math.floor(timer % 60)).padStart(2, '0');
+  const { minutes, seconds } = useSecTrans(timer);
   const { taskName, estimateCycle, usedCycle } = useAtomValue(currentTaskAtom);
   const state = useAtomValue(timerStateAtom);
   const displayText = state === 'work' ? taskName : DEFAULT_BREAKTEXT;
@@ -22,7 +22,7 @@ const Countdown = () => {
     <div className={`display__wrapper ${runningStatus ? 'display__wrapper--grow' : ''}`}>
       <div className="countdown__wrapper">
         <h1 className="countdown__timer">
-          {minDisplay}:{secDisplay}
+          {minutes}:{seconds}
         </h1>
       </div>
       <div className="task__wrapper">
