@@ -7,6 +7,8 @@ import {
   DEFAULT_BREAKTIME,
   DEFAULT_WORKTIME,
   currentTaskAtom,
+  startTimeAtom,
+  setTaskStartTimeAtom,
 } from '@/atoms/taskAtoms';
 import { useCycle } from '@/hooks/useStatus';
 
@@ -17,6 +19,8 @@ const useTimer = () => {
   const { state, switchState } = useCycle();
   const addUsedCycle = useSetAtom(addUsedCycleAtom);
   const currentTask = useAtomValue(currentTaskAtom);
+  const setStartTime = useSetAtom(startTimeAtom);
+  const setTaskStartTime = useSetAtom(setTaskStartTimeAtom);
 
   // 倒數計時器
   useEffect(() => {
@@ -42,6 +46,14 @@ const useTimer = () => {
 
   // 切換計時器開關
   const toggleTimer = () => {
+    if (!running) {
+      const now = Date.now();
+      setStartTime(now); // 設置開始時間
+      setTaskStartTime(now);
+      setRunning(true);
+    } else {
+      setRunning(false);
+    }
     const runningStatus = !running;
     setRunning(runningStatus);
   };

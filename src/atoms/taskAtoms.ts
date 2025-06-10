@@ -10,6 +10,7 @@ type Task = {
   estimateCycle: number;
   usedCycle: number;
   completed: boolean;
+  startTime?: number | null; // Optional start time for the task
 };
 
 const TaskSchema = z.object({
@@ -20,6 +21,7 @@ const TaskSchema = z.object({
   estimateCycle: z.number(),
   usedCycle: z.number(),
   completed: z.boolean(),
+  startTime: z.number().nullable().optional(),
 });
 
 const UserInfoSchema = z.object({
@@ -63,6 +65,7 @@ const getUserInfo = (): UserInfo => {
 
 const userInfoAtom = atom<UserInfo>(getUserInfo());
 
+// currentTaskAtom
 const currentTaskAtom = atom((get) => {
   const userInfo = get(userInfoAtom);
   const task = userInfo.tasks.find((task) => {
@@ -77,6 +80,7 @@ const currentTaskAtom = atom((get) => {
   };
 });
 
+// addTaskAtom
 const addTaskAtom = atom(
   null,
   (
@@ -112,6 +116,7 @@ const addTaskAtom = atom(
   }
 );
 
+// addUsedCycleAtom
 const addUsedCycleAtom = atom(null, (get, set) => {
   const userInfo = get(userInfoAtom);
   const updatedTasks = userInfo.tasks.map((task) => {
@@ -133,6 +138,23 @@ const addUsedCycleAtom = atom(null, (get, set) => {
   set(userInfoAtom, updatedUserInfo);
 });
 
+//startTimeAtom
+const startTimeAtom = atom<number | null>(null);
+
+// taskStartTimeAtom
+const setTaskStartTimeAtom = atom(null, (get, set, startTime: number) => {
+  const userInfo = get(userInfoAtom);
+  const updatedTasks = userInfo.tasks.map((task) =>
+    task.id === userInfo.currentTaskId ? { ...task, startTime } : task
+  );
+  const updatedUserInfo = {
+    ...userInfo,
+    tasks: updatedTasks,
+  };
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedUserInfo));
+  set(userInfoAtom, updatedUserInfo);
+});
+
 export {
   timerStateAtom,
   isRunning,
@@ -145,4 +167,6 @@ export {
   DEFAULT_BREAKTIME,
   DEFAULT_BREAKTEXT,
   showModalAtom,
+  startTimeAtom,
+  setTaskStartTimeAtom,
 };
