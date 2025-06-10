@@ -5,6 +5,8 @@ type UserInfo = z.infer<typeof UserInfoSchema>;
 type Task = {
   id: number;
   taskName: string;
+  estimateWorkTime: number;
+  estimateBreakTime: number;
   estimateCycle: number;
   usedCycle: number;
   completed: boolean;
@@ -13,6 +15,8 @@ type Task = {
 const TaskSchema = z.object({
   id: z.number(),
   taskName: z.string(),
+  estimateWorkTime: z.number(),
+  estimateBreakTime: z.number(),
   estimateCycle: z.number(),
   usedCycle: z.number(),
   completed: z.boolean(),
@@ -25,13 +29,11 @@ const UserInfoSchema = z.object({
 
 // configure
 const STORAGE_KEY = 'userInfo';
-const DEFAULT_TASK = 'Time to focus!';
-const DEFAULT_estimateCycle = 1;
-// const DEFAULT_WORKTIME = 25 * 60;
-// const DEFAULT_BREAKTIME = 5 * 60;
-const DEFAULT_WORKTIME = 3;
-const DEFAULT_BREAKTIME = 1;
+const DEFAULT_WORKTIME = 25 * 60;
+const DEFAULT_BREAKTIME = 5 * 60;
 const DEFAULT_BREAKTEXT = 'Break time!';
+const DEFAULT_TASK = 'Focus Time!';
+const DEFAULT_estimateCycle = 1;
 
 // default
 const defaultUserInfo: UserInfo = {
@@ -68,30 +70,47 @@ const currentTaskAtom = atom((get) => {
   });
   return {
     taskName: task?.taskName || DEFAULT_TASK,
+    estimateWorkTime: task?.estimateWorkTime || DEFAULT_WORKTIME,
+    estimateBreakTime: task?.estimateBreakTime || DEFAULT_BREAKTIME,
     estimateCycle: task?.estimateCycle || DEFAULT_estimateCycle,
     usedCycle: task?.usedCycle || 0,
   };
 });
 
-const addTaskAtom = atom(null, (get, set, task: { taskName: string; estimateCycle: number }) => {
-  const prev = get(userInfoAtom);
-  const newTask: Task = {
-    id: Date.now(),
-    taskName: task.taskName,
-    estimateCycle: task.estimateCycle,
-    usedCycle: 0,
-    completed: false,
-  };
+const addTaskAtom = atom(
+  null,
+  (
+    get,
+    set,
+    task: {
+      taskName: string;
+      estimateWorkTime: number;
+      estimateBreakTime: number;
+      estimateCycle: number;
+    }
+  ) => {
+    const prev = get(userInfoAtom);
+    const newTask: Task = {
+      id: Date.now(),
+      taskName: task.taskName,
+      estimateWorkTime: task.estimateWorkTime * 60,
+      estimateBreakTime: task.estimateBreakTime * 60,
+      estimateCycle: task.estimateCycle,
+      usedCycle: 0,
+      completed: false,
+    };
 
-  const updateData = {
-    ...prev,
-    tasks: [...prev.tasks, newTask],
-    currentTaskId: newTask.id,
-  };
+    const updateData = {
+      ...prev,
+      tasks: [...prev.tasks, newTask],
+      currentTaskId: newTask.id,
+    };
 
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(updateData));
-  set(userInfoAtom, updateData);
-});
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(updateData));
+    set(userInfoAtom, updateData);
+    set(timeLeftAtom, newTask.estimateWorkTime); // Reset time left to the new task's work time
+  }
+);
 
 const addUsedCycleAtom = atom(null, (get, set) => {
   const userInfo = get(userInfoAtom);

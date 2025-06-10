@@ -1,11 +1,12 @@
 import { useRef, useEffect } from 'react';
-import { useAtom, useSetAtom } from 'jotai';
+import { useAtom, useSetAtom, useAtomValue } from 'jotai';
 import {
   isRunning,
   timeLeftAtom,
   addUsedCycleAtom,
   DEFAULT_BREAKTIME,
   DEFAULT_WORKTIME,
+  currentTaskAtom,
 } from '@/atoms/taskAtoms';
 import { useCycle } from '@/hooks/useStatus';
 
@@ -15,6 +16,7 @@ const useTimer = () => {
   const [running, setRunning] = useAtom(isRunning);
   const { state, switchState } = useCycle();
   const addUsedCycle = useSetAtom(addUsedCycleAtom);
+  const currentTask = useAtomValue(currentTaskAtom);
 
   // 倒數計時器
   useEffect(() => {
@@ -49,9 +51,9 @@ const useTimer = () => {
     clearInterval(timerRef.current!);
     setRunning(false);
     if (state === 'work') {
-      setTimer(DEFAULT_WORKTIME);
+      setTimer(currentTask.estimateWorkTime || DEFAULT_WORKTIME);
     } else {
-      setTimer(DEFAULT_BREAKTIME);
+      setTimer(currentTask.estimateBreakTime || DEFAULT_BREAKTIME);
     }
     return 0;
   };
@@ -65,7 +67,8 @@ const useTimer = () => {
 
   // 切換計時器狀態自動渲染預設時間
   useEffect(() => {
-    const nextDefaultTime = state === 'work' ? DEFAULT_WORKTIME : DEFAULT_BREAKTIME;
+    const nextDefaultTime =
+      state === 'work' ? currentTask.estimateWorkTime : currentTask.estimateBreakTime;
     setTimer(nextDefaultTime);
   }, [state]);
 
