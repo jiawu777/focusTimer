@@ -57,6 +57,7 @@ const getUserInfo = (): UserInfo => {
 };
 
 const userInfoAtom = atom<UserInfo>(getUserInfo());
+const showSettingModalAtom = atom(false);
 
 const currentTaskAtom = atom((get) => {
   const userInfo = get(userInfoAtom);
@@ -122,4 +123,5 @@ export {
   DEFAULT_WORKTIME,
   DEFAULT_BREAKTIME,
   DEFAULT_BREAKTEXT,
+  showSettingModalAtom,
 };

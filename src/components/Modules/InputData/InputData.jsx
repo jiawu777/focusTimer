@@ -1,12 +1,15 @@
-import { useAtomValue } from 'jotai';
-import { isRunning } from '@/atoms/taskAtoms';
+import { useAtomValue, useAtom } from 'jotai';
+import { isRunning, showSettingModalAtom } from '@/atoms/taskAtoms';
 import { useInputData } from '@/hooks/useInputData';
 import './InputData.scss';
 
 const InputData = () => {
-  const addTaskBtn = 'Add';
+  const [show, setShow] = useAtom(showSettingModalAtom);
+
+  const addTaskBtn = 'Set Task';
   const { taskNameRef, estimateCycleRef, errors, handleSubmit } = useInputData();
   const runningStatus = useAtomValue(isRunning);
+  if (!show) return null;
   return (
     <div className={`input__wrapper ${runningStatus ? 'input__wrapper--hide' : ''}`}>
       <form

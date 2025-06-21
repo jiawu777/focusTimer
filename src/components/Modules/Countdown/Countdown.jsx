@@ -1,6 +1,13 @@
-import { useAtomValue } from 'jotai';
-import { currentTaskAtom, DEFAULT_BREAKTEXT, timerStateAtom, isRunning } from '@/atoms/taskAtoms';
+import { useAtomValue, useAtom } from 'jotai';
+import {
+  currentTaskAtom,
+  DEFAULT_BREAKTEXT,
+  timerStateAtom,
+  isRunning,
+  showSettingModalAtom,
+} from '@/atoms/taskAtoms';
 import { useTimer } from '@/hooks/useTimer';
+import InputData from '../InputData';
 import './Countdown.scss';
 
 const Countdown = () => {
@@ -17,6 +24,7 @@ const Countdown = () => {
   const state = useAtomValue(timerStateAtom);
   const displayText = state === 'work' ? taskName : DEFAULT_BREAKTEXT;
   const runningStatus = useAtomValue(isRunning);
+  const [ShowSettingModal, setShowSettingModal] = useAtom(showSettingModalAtom);
 
   return (
     <div className={`display__wrapper ${runningStatus ? 'display__wrapper--grow' : ''}`}>
@@ -35,7 +43,8 @@ const Countdown = () => {
         <button
           className={`btn btn__toggleTimer ${
             running ? 'btn__toggleTimer--off' : 'btn__toggleTimer--on'
-          }`}
+          }
+          ${ShowSettingModal ? 'Close' : 'Setting'}`}
           onClick={toggleTimer}
         >
           {running ? TimerSwitch.off : TimerSwitch.on}
@@ -53,6 +62,12 @@ const Countdown = () => {
           {TimerSwitch.skip}
         </button>
       </div>
+      <button
+        className={`btn btn__showSettingModal ${running ? 'btn__showSettingModal--hide' : ''}`}
+        onClick={() => setShowSettingModal((prev) => !prev)}
+      >
+        {ShowSettingModal ? 'Close' : 'Setting'}
+      </button>
     </div>
   );
 };
