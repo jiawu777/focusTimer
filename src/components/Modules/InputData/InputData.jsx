@@ -7,18 +7,22 @@ const InputData = () => {
   const [show, setShow] = useAtom(showSettingModalAtom);
 
   const addTaskBtn = 'Set Task';
-  const { taskNameRef, estimateCycleRef, errors, handleSubmit } = useInputData();
+  const closeSettingBtn = 'Close';
+  const settingTitle = 'SETTING';
+
+  const { taskNameRef, workTimeRef, breakTimeRef, errors, handleSubmit } = useInputData();
   const runningStatus = useAtomValue(isRunning);
   if (!show) return null;
   return (
     <div className={`input__wrapper ${runningStatus ? 'input__wrapper--hide' : ''}`}>
+      <h1 className="input__title">{settingTitle}</h1>
       <form
         className={`input__form `}
         onSubmit={handleSubmit}
       >
         <input
           required
-          className="input input__task"
+          className="input__inputBox input__inputBox--task"
           type="text"
           ref={taskNameRef}
           placeholder="Enter Task"
@@ -26,15 +30,22 @@ const InputData = () => {
         {errors.task && <span className="err__taskError">{errors.task}</span>}
         <input
           required
-          className="input input__cycle"
+          className="input__inputBox inputBox--workTime"
           type="number"
-          ref={estimateCycleRef}
-          placeholder="Enter Cycle"
+          ref={workTimeRef}
+          placeholder="Enter WorkTime"
           min={1}
         />
-        {errors.estimateCycle && (
-          <span className="err__estimateCycleError">{errors.estimateCycle}</span>
-        )}
+        {errors.workTime && <span className="err__workTimeRef">{errors.workTime}</span>}
+        <input
+          required
+          className="input__inputBox inputBox--breakTime"
+          type="number"
+          ref={breakTimeRef}
+          placeholder="Enter BreakTime"
+          min={1}
+        />
+        {errors.BreakTime && <span className="err__breakTimeRef">{errors.breakTime}</span>}
         <button
           type="submit"
           className="input__btn"
@@ -42,6 +53,12 @@ const InputData = () => {
           {addTaskBtn}
         </button>
       </form>
+      <button
+        className="btn btn__showSettingModal"
+        onClick={() => setShow(false)}
+      >
+        {closeSettingBtn}
+      </button>
     </div>
   );
 };

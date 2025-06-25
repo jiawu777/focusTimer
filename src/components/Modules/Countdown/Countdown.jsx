@@ -1,33 +1,28 @@
 import { useAtomValue, useAtom } from 'jotai';
-import {
-  currentTaskAtom,
-  DEFAULT_BREAKTEXT,
-  timerStateAtom,
-  isRunning,
-  showSettingModalAtom,
-} from '@/atoms/taskAtoms';
+import { currentTaskAtom, isRunning, showSettingModalAtom } from '@/atoms/taskAtoms';
 import { useTimer } from '@/hooks/useTimer';
-import InputData from '../InputData';
 import './Countdown.scss';
 
 const Countdown = () => {
-  const { timer, running, toggleTimer, resetTimer, skipTimer } = useTimer();
+  const { timer, running, toggleTimer } = useTimer();
   const TimerSwitch = {
     on: 'Start',
     off: 'Pause',
-    reset: 'Reset',
-    skip: 'Skip',
   };
+  const openSettingBtn = 'Setting';
   const minDisplay = String(Math.floor(timer / 60)).padStart(2, '0');
   const secDisplay = String(Math.floor(timer % 60)).padStart(2, '0');
-  const { taskName, estimateCycle, usedCycle } = useAtomValue(currentTaskAtom);
-  const state = useAtomValue(timerStateAtom);
-  const displayText = state === 'work' ? taskName : DEFAULT_BREAKTEXT;
+  const { taskName, planWorkTime, planBreakTime, DEFAULT_TASK } = useAtomValue(currentTaskAtom);
+  const displayText = taskName || DEFAULT_TASK;
   const runningStatus = useAtomValue(isRunning);
   const [ShowSettingModal, setShowSettingModal] = useAtom(showSettingModalAtom);
 
   return (
-    <div className={`display__wrapper ${runningStatus ? 'display__wrapper--grow' : ''}`}>
+    <div
+      className={`display__wrapper ${runningStatus ? 'display__wrapper--grow' : ''} ${
+        ShowSettingModal ? 'display__wrapper--hide' : ''
+      }`}
+    >
       <div className="countdown__wrapper">
         <h1 className="countdown__timer">
           {minDisplay}:{secDisplay}
@@ -35,9 +30,6 @@ const Countdown = () => {
       </div>
       <div className="task__wrapper">
         <h1 className="task__currentTask">{displayText}</h1>
-        <h1 className={`task__currentCycle ${state === 'work' ? '' : 'task__currentCycle--hide'}`}>
-          {usedCycle}/{estimateCycle}
-        </h1>
       </div>
       <div className="btn__wrapper">
         <button
@@ -49,24 +41,12 @@ const Countdown = () => {
         >
           {running ? TimerSwitch.off : TimerSwitch.on}
         </button>
-        <button
-          className={`btn btn__reset ${running ? '' : 'btn__reset--hide'}`}
-          onClick={resetTimer}
-        >
-          {TimerSwitch.reset}
-        </button>
-        <button
-          className={`btn btn__skip ${running ? '' : 'btn__skip--hide'}`}
-          onClick={skipTimer}
-        >
-          {TimerSwitch.skip}
-        </button>
       </div>
       <button
         className={`btn btn__showSettingModal ${running ? 'btn__showSettingModal--hide' : ''}`}
-        onClick={() => setShowSettingModal((prev) => !prev)}
+        onClick={() => setShowSettingModal(true)}
       >
-        {ShowSettingModal ? 'Close' : 'Setting'}
+        {openSettingBtn}
       </button>
     </div>
   );

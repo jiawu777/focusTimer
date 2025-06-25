@@ -5,17 +5,15 @@ type UserInfo = z.infer<typeof UserInfoSchema>;
 type Task = {
   id: number;
   taskName: string;
-  estimateCycle: number;
-  usedCycle: number;
-  completed: boolean;
+  workTimeRef: number;
+  breakTimeRef: number;
 };
 
 const TaskSchema = z.object({
   id: z.number(),
   taskName: z.string(),
-  estimateCycle: z.number(),
-  usedCycle: z.number(),
-  completed: z.boolean(),
+  workTimeRef: z.number(),
+  breakTimeRef: z.number(),
 });
 
 const UserInfoSchema = z.object({
@@ -26,10 +24,8 @@ const UserInfoSchema = z.object({
 // configure
 const STORAGE_KEY = 'userInfo';
 const DEFAULT_TASK = 'Time to focus!';
-const DEFAULT_estimateCycle = 1;
-const DEFAULT_WORKTIME = 25 * 60;
-const DEFAULT_BREAKTIME = 5 * 60;
-const DEFAULT_BREAKTEXT = 'Break time!';
+const DEFAULT_WORKTIME = 25 * 60; // minutes
+const DEFAULT_BREAKTIME = 5 * 60; // minutes
 
 // default
 const defaultUserInfo: UserInfo = {
@@ -40,7 +36,7 @@ const defaultUserInfo: UserInfo = {
 // state
 const timerStateAtom = atom<'work' | 'break'>('work');
 const isRunning = atom(false);
-const timeLeftAtom = atom(DEFAULT_WORKTIME);
+const stopwatchAtom = atom(0);
 
 // function
 const getUserInfo = (): UserInfo => {
@@ -66,62 +62,42 @@ const currentTaskAtom = atom((get) => {
   });
   return {
     taskName: task?.taskName || DEFAULT_TASK,
-    estimateCycle: task?.estimateCycle || DEFAULT_estimateCycle,
-    usedCycle: task?.usedCycle || 0,
+    workTimeRef: task?.workTimeRef || DEFAULT_WORKTIME,
+    breakTimeRef: task?.breakTimeRef || DEFAULT_BREAKTIME,
   };
 });
 
-const addTaskAtom = atom(null, (get, set, task: { taskName: string; estimateCycle: number }) => {
-  const prev = get(userInfoAtom);
-  const newTask: Task = {
-    id: Date.now(),
-    taskName: task.taskName,
-    estimateCycle: task.estimateCycle,
-    usedCycle: 0,
-    completed: false,
-  };
+const addTaskAtom = atom(
+  null,
+  (get, set, task: { taskName: string; workTimeRef: number; breakTimeRef: number }) => {
+    const prev = get(userInfoAtom);
+    const newTask: Task = {
+      id: Date.now(),
+      taskName: task.taskName,
+      workTimeRef: task.workTimeRef,
+      breakTimeRef: task.breakTimeRef,
+    };
 
-  const updateData = {
-    ...prev,
-    tasks: [...prev.tasks, newTask],
-    currentTaskId: newTask.id,
-  };
+    const updateData = {
+      ...prev,
+      tasks: [...prev.tasks, newTask],
+      currentTaskId: newTask.id,
+    };
 
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(updateData));
-  set(userInfoAtom, updateData);
-});
-
-const addUsedCycleAtom = atom(null, (get, set) => {
-  const userInfo = get(userInfoAtom);
-  const updatedTasks = userInfo.tasks.map((task) => {
-    if (task.id === userInfo.currentTaskId) {
-      return {
-        ...task,
-        usedCycle: task.usedCycle + 1,
-      };
-    }
-    return task;
-  });
-
-  const updatedUserInfo = {
-    ...userInfo,
-    tasks: updatedTasks,
-  };
-
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedUserInfo));
-  set(userInfoAtom, updatedUserInfo);
-});
+    console.log(newTask);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(updateData));
+    set(userInfoAtom, updateData);
+  }
+);
 
 export {
   timerStateAtom,
   isRunning,
-  timeLeftAtom,
+  stopwatchAtom,
   userInfoAtom,
   currentTaskAtom,
   addTaskAtom,
-  addUsedCycleAtom,
   DEFAULT_WORKTIME,
   DEFAULT_BREAKTIME,
-  DEFAULT_BREAKTEXT,
   showSettingModalAtom,
 };

@@ -4,22 +4,27 @@ import { addTaskAtom } from '@/atoms/taskAtoms';
 
 interface Errors {
   task?: string;
-  estimateCycle?: string;
+  workTime?: string;
+  breakTime?: string;
 }
 
 const useInputData = () => {
   const taskNameRef = useRef<HTMLInputElement>(null);
-  const estimateCycleRef = useRef<HTMLInputElement>(null);
+  const workTimeRef = useRef<HTMLInputElement>(null);
+  const breakTimeRef = useRef<HTMLInputElement>(null);
+
   const [errors, setErrors] = useState<Errors>({});
   const addTask = useSetAtom(addTaskAtom);
 
   const validate = (): Errors => {
     const newErrors: Errors = {};
     const task = taskNameRef.current?.value.trim();
-    const estimateCycle = Number(estimateCycleRef.current?.value);
+    const workTime = Number(workTimeRef.current?.value);
+    const breakTime = Number(breakTimeRef.current?.value);
+
     if (!task) newErrors.task = '請輸入任務名稱';
-    if (!estimateCycle || isNaN(estimateCycle))
-      newErrors.estimateCycle = '請輸入正確的循環數(至少1)';
+    if (!workTime || isNaN(workTime)) newErrors.workTime = '請輸入預計每循環工作時長(分鐘)';
+    if (!breakTime || isNaN(breakTime)) newErrors.breakTime = '請輸入預計每循環休息時長(分鐘)';
 
     return newErrors;
   };
@@ -37,8 +42,8 @@ const useInputData = () => {
     const newTask = {
       id: Date.now(),
       taskName: taskNameRef.current!.value.trim(),
-      estimateCycle: Number(estimateCycleRef.current!.value),
-      completed: false,
+      workTimeRef: Number(workTimeRef.current!.value),
+      breakTimeRef: Number(breakTimeRef.current!.value),
     };
 
     // addNewTask(newTask);
@@ -46,14 +51,15 @@ const useInputData = () => {
 
     // reset value
     if (taskNameRef.current) taskNameRef.current.value = '';
-    if (estimateCycleRef.current) estimateCycleRef.current.value = '';
-
+    if (workTimeRef.current) workTimeRef.current.value = '';
+    if (breakTimeRef.current) breakTimeRef.current.value = '';
     setErrors({});
   };
 
   return {
     taskNameRef,
-    estimateCycleRef,
+    workTimeRef,
+    breakTimeRef,
     errors,
     handleSubmit,
   };
