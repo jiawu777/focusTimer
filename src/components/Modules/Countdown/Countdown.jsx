@@ -1,6 +1,8 @@
+import { useEffect } from 'react';
 import { useAtomValue, useAtom } from 'jotai';
 import { currentTaskAtom, isRunning, showSettingModalAtom } from '@/atoms/taskAtoms';
 import { useTimer } from '@/hooks/useTimer';
+import usePageViewLog from '@/hooks/usePageViewLog';
 import './Countdown.scss';
 
 const Countdown = () => {
@@ -12,10 +14,12 @@ const Countdown = () => {
   const openSettingBtn = 'Setting';
   const minDisplay = String(Math.floor(timer / 60)).padStart(2, '0');
   const secDisplay = String(Math.floor(timer % 60)).padStart(2, '0');
-  const { taskName, planWorkTime, planBreakTime, DEFAULT_TASK } = useAtomValue(currentTaskAtom);
+  const { taskName, DEFAULT_TASK } = useAtomValue(currentTaskAtom);
   const displayText = taskName || DEFAULT_TASK;
   const runningStatus = useAtomValue(isRunning);
   const [ShowSettingModal, setShowSettingModal] = useAtom(showSettingModalAtom);
+
+  usePageViewLog(runningStatus);
 
   return (
     <div

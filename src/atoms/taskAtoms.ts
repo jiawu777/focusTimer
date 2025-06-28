@@ -1,19 +1,36 @@
 import { atom } from 'jotai';
 import { z } from 'zod';
 
+// types
 type UserInfo = z.infer<typeof UserInfoSchema>;
+
 type Task = {
   id: number;
   taskName: string;
   workTimeRef: number;
   breakTimeRef: number;
+  pageViewLog?: PageViewLog[];
 };
 
+type PageViewLog = {
+  visible: boolean;
+  timestamp: number;
+};
+
+// schema
 const TaskSchema = z.object({
   id: z.number(),
   taskName: z.string(),
   workTimeRef: z.number(),
   breakTimeRef: z.number(),
+  pageViewLog: z
+    .array(
+      z.object({
+        visible: z.boolean(),
+        timestamp: z.number(),
+      })
+    )
+    .optional(),
 });
 
 const UserInfoSchema = z.object({
@@ -76,6 +93,7 @@ const addTaskAtom = atom(
       taskName: task.taskName,
       workTimeRef: task.workTimeRef,
       breakTimeRef: task.breakTimeRef,
+      pageViewLog: [],
     };
 
     const updateData = {
@@ -84,11 +102,30 @@ const addTaskAtom = atom(
       currentTaskId: newTask.id,
     };
 
-    console.log(newTask);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updateData));
     set(userInfoAtom, updateData);
   }
 );
+
+const updatePageViewAtom = atom(null, (get, set, log: PageViewLog) => {
+  const userInfo = get(userInfoAtom);
+  const updatedTasks = userInfo.tasks.map((task) => {
+    if (task.id === userInfo.currentTaskId) {
+      return {
+        ...task,
+        pageViewLog: [...(task.pageViewLog ?? []), log],
+      };
+    }
+    return task;
+  });
+  const updateData = {
+    ...userInfo,
+    tasks: updatedTasks,
+  };
+
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(updateData));
+  set(userInfoAtom, updateData);
+});
 
 export {
   timerStateAtom,
@@ -100,4 +137,5 @@ export {
   DEFAULT_WORKTIME,
   DEFAULT_BREAKTIME,
   showSettingModalAtom,
+  updatePageViewAtom,
 };
