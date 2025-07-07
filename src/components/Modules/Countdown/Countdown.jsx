@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
 import { useAtomValue, useAtom } from 'jotai';
 import { currentTaskAtom, isRunning, showSettingModalAtom } from '@/atoms/taskAtoms';
 import { useTimer } from '@/hooks/useTimer';
-import usePageViewLog from '@/hooks/usePageViewLog';
+import { usePageViewLog } from '@/hooks/usePageViewLog';
+import { useToggleModal } from '@/hooks/useToggleModal';
 import './Countdown.scss';
 
 const Countdown = () => {
@@ -11,20 +11,22 @@ const Countdown = () => {
     on: 'Start',
     off: 'Pause',
   };
-  const openSettingBtn = 'Setting';
+  const [openSettingBtn, openAnalyticsBtn] = ['Setting', 'Analytics'];
   const minDisplay = String(Math.floor(timer / 60)).padStart(2, '0');
   const secDisplay = String(Math.floor(timer % 60)).padStart(2, '0');
   const { taskName, DEFAULT_TASK } = useAtomValue(currentTaskAtom);
+  const [showSettingModal, setShowSettingModal] = useAtom(showSettingModalAtom);
+
   const displayText = taskName || DEFAULT_TASK;
   const runningStatus = useAtomValue(isRunning);
-  const [ShowSettingModal, setShowSettingModal] = useAtom(showSettingModalAtom);
+  const { handleShowAnalytics } = useToggleModal();
 
   usePageViewLog(runningStatus);
 
   return (
     <div
       className={`display__wrapper ${runningStatus ? 'display__wrapper--grow' : ''} ${
-        ShowSettingModal ? 'display__wrapper--hide' : ''
+        showSettingModal ? 'display__wrapper--hide' : ''
       }`}
     >
       <div className="countdown__wrapper">
@@ -40,7 +42,7 @@ const Countdown = () => {
           className={`btn btn__toggleTimer ${
             running ? 'btn__toggleTimer--off' : 'btn__toggleTimer--on'
           }
-          ${ShowSettingModal ? 'Close' : 'Setting'}`}
+          ${showSettingModal ? 'Close' : 'Setting'}`}
           onClick={toggleTimer}
         >
           {running ? TimerSwitch.off : TimerSwitch.on}
@@ -51,6 +53,12 @@ const Countdown = () => {
         onClick={() => setShowSettingModal(true)}
       >
         {openSettingBtn}
+      </button>
+      <button
+        className={`btn btn__showAnalyticsModal ${running ? '' : 'btn__showAnalyticsModal--hide'}`}
+        onClick={() => handleShowAnalytics(true)}
+      >
+        {openAnalyticsBtn}
       </button>
     </div>
   );

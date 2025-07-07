@@ -71,6 +71,7 @@ const getUserInfo = (): UserInfo => {
 
 const userInfoAtom = atom<UserInfo>(getUserInfo());
 const showSettingModalAtom = atom(false);
+const showAnalyticsModalAtom = atom(false);
 
 const currentTaskAtom = atom((get) => {
   const userInfo = get(userInfoAtom);
@@ -81,6 +82,7 @@ const currentTaskAtom = atom((get) => {
     taskName: task?.taskName || DEFAULT_TASK,
     workTimeRef: task?.workTimeRef || DEFAULT_WORKTIME,
     breakTimeRef: task?.breakTimeRef || DEFAULT_BREAKTIME,
+    pageViewLog: task?.pageViewLog || null,
   };
 });
 
@@ -138,4 +140,6 @@ export {
   DEFAULT_BREAKTIME,
   showSettingModalAtom,
   updatePageViewAtom,
+  showAnalyticsModalAtom,
 };
+export type { PageViewLog };

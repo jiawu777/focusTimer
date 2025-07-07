@@ -18,10 +18,9 @@ const usePageViewLog = (runningStatus: boolean) => {
     const handleChange = () => {
       const now = Date.now();
       const current = checkIsOnPage();
-      console.log(`${current} before if`);
       // 初次或切換才記錄
-      if (prevState.current === null || prevState.current !== current) {
-        console.log(`${current} prevState.current === null || prevState.current !== current`);
+      if (prevState.current === current) return;
+      else {
         setPageViewLog({ visible: current, timestamp: now });
         prevState.current = current;
       }
@@ -39,4 +38,4 @@ const usePageViewLog = (runningStatus: boolean) => {
   }, [setPageViewLog, runningStatus]);
 };
 
-export default usePageViewLog;
+export { usePageViewLog };

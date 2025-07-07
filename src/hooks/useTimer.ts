@@ -28,10 +28,17 @@ const useTimer = () => {
     setRunning(runningStatus);
   };
 
+  //重置計時器
+  const resetTimer = () => {
+    clearInterval(timerRef.current!);
+    setRunning(false);
+  };
+
   return {
     timer,
     running,
     toggleTimer,
+    resetTimer,
   };
 };
 

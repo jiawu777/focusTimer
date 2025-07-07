@@ -43,5 +43,9 @@ const LayoutMain = (props: IProps) => {
     </main>
   );
 };
+const LayoutModal = (props: IProps) => {
+  const { children } = props;
+  return <section className="layout__modal">{children}</section>;
+};
 
-export { Layout, LayoutPageHeader, LayoutNavBar, LayoutMain };
+export { Layout, LayoutPageHeader, LayoutNavBar, LayoutMain, LayoutModal };
