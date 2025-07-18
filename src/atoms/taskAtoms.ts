@@ -17,6 +17,13 @@ type PageViewLog = {
   timestamp: number;
 };
 
+type ScheduledSegment = {
+  state: 'work' | 'break';
+  percent: number;
+  start: number;
+  end: number;
+};
+
 // schema
 const TaskSchema = z.object({
   id: z.number(),
@@ -109,6 +116,39 @@ const addTaskAtom = atom(
   }
 );
 
+const clearTaskAtom = atom(null, (get, set) => {
+  const userInfo = get(userInfoAtom);
+  if (userInfo.currentTaskId === null) return;
+  const updateData = {
+    tasks: [],
+    currentTaskId: 0,
+  };
+
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(updateData));
+  set(userInfoAtom, updateData);
+});
+
+const clearPageViewLogAtom = atom(null, (get, set) => {
+  const userInfo = get(userInfoAtom);
+  const updatedTasks = userInfo.tasks.map((task) => {
+    if (task.id === userInfo.currentTaskId) {
+      return {
+        ...task,
+        pageViewLog: [],
+      };
+    }
+    return task;
+  });
+  const updateData = {
+    ...userInfo,
+    tasks: updatedTasks,
+  };
+
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(updateData));
+  set(userInfoAtom, updateData);
+  set(showAnalyticsModalAtom, false);
+});
+
 const updatePageViewAtom = atom(null, (get, set, log: PageViewLog) => {
   const userInfo = get(userInfoAtom);
   const updatedTasks = userInfo.tasks.map((task) => {
@@ -141,5 +181,7 @@ export {
   showSettingModalAtom,
   updatePageViewAtom,
   showAnalyticsModalAtom,
+  clearPageViewLogAtom,
+  clearTaskAtom,
 };
-export type { PageViewLog };
+export type { PageViewLog, ScheduledSegment };

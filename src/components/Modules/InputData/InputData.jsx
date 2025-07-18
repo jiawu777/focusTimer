@@ -8,7 +8,7 @@ const InputData = () => {
 
   const addTaskBtn = 'Set Task';
   const closeSettingBtn = 'Close';
-  const settingTitle = 'SETTING';
+  const settingTitle = 'Add Task';
 
   const { taskNameRef, workTimeRef, breakTimeRef, errors, handleSubmit } = useInputData();
   const runningStatus = useAtomValue(isRunning);

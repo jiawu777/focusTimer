@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { useSetAtom } from 'jotai';
-import { addTaskAtom, showSettingModalAtom, stopwatchAtom } from '@/atoms/taskAtoms';
+import { addTaskAtom, showSettingModalAtom, stopwatchAtom, clearTaskAtom } from '@/atoms/taskAtoms';
 
 interface Errors {
   task?: string;
@@ -15,6 +15,7 @@ const useInputData = () => {
 
   const [errors, setErrors] = useState<Errors>({});
   const addTask = useSetAtom(addTaskAtom);
+  const clearPrevTasks = useSetAtom(clearTaskAtom);
   const setShowSettingModal = useSetAtom(showSettingModalAtom);
   const resetTimer = useSetAtom(stopwatchAtom);
 
@@ -43,14 +44,27 @@ const useInputData = () => {
 
     const newTask = {
       id: Date.now(),
-      taskName: taskNameRef.current!.value.trim(),
-      workTimeRef: Number(workTimeRef.current!.value),
-      breakTimeRef: Number(breakTimeRef.current!.value),
+      taskName: taskNameRef.current?.value.trim() ?? '',
+      workTimeRef: Number(workTimeRef.current?.value) * 60, // convert minutes to seconds
+      breakTimeRef: Number(breakTimeRef.current?.value) * 60, // convert minutes to seconds
     };
 
+    if (!newTask.taskName) {
+      setErrors({ task: '請輸入任務名稱' });
+      return;
+    }
+    if (newTask.workTimeRef <= 0) {
+      setErrors({ workTime: '工作時長必須大於0' });
+      return;
+    }
+    if (newTask.breakTimeRef < 0) {
+      setErrors({ breakTime: '休息時長不能小於0' });
+      return;
+    }
+    // clear prev tasks;
+    clearPrevTasks();
     // addNewTask(newTask);
     addTask(newTask);
-
     // reset value
     if (taskNameRef.current) taskNameRef.current.value = '';
     if (workTimeRef.current) workTimeRef.current.value = '';

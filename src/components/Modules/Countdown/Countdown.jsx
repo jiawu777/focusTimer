@@ -11,7 +11,7 @@ const Countdown = () => {
     on: 'Start',
     off: 'Pause',
   };
-  const [openSettingBtn, openAnalyticsBtn] = ['Setting', 'Analytics'];
+  const [openSettingBtn, openAnalyticsBtn] = ['New Task', 'Analytics'];
   const minDisplay = String(Math.floor(timer / 60)).padStart(2, '0');
   const secDisplay = String(Math.floor(timer % 60)).padStart(2, '0');
   const { taskName, DEFAULT_TASK } = useAtomValue(currentTaskAtom);
@@ -42,7 +42,7 @@ const Countdown = () => {
           className={`btn btn__toggleTimer ${
             running ? 'btn__toggleTimer--off' : 'btn__toggleTimer--on'
           }
-          ${showSettingModal ? 'Close' : 'Setting'}`}
+          ${showSettingModal ? 'Close' : 'New Task'}`}
           onClick={toggleTimer}
         >
           {running ? TimerSwitch.off : TimerSwitch.on}
