@@ -1,4 +1,4 @@
-import type { ScheduledSegment } from '@/atoms/taskAtoms';
+import type { ScheduledSegment } from '@/types/taskTypes';
 
 const useScheduledSegments = (
   start: number,

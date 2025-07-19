@@ -1,6 +1,8 @@
 import { useRef, useState } from 'react';
 import { useSetAtom } from 'jotai';
-import { addTaskAtom, showSettingModalAtom, stopwatchAtom, clearTaskAtom } from '@/atoms/taskAtoms';
+import { addTaskAtom, clearTaskAtom } from '@/atoms/taskAtoms';
+import { showSettingModalAtom } from '@/atoms/modalAtoms';
+import { stopwatchAtom } from '@/atoms/timerAtoms';
 
 interface Errors {
   task?: string;

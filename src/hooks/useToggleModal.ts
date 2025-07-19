@@ -1,9 +1,10 @@
 import { useAtom } from 'jotai';
-import { isRunning, showSettingModalAtom, showAnalyticsModalAtom } from '@/atoms/taskAtoms';
+import { isRunning } from '@/atoms/timerAtoms';
+import { showAnalyticsModalAtom } from '@/atoms/modalAtoms';
 
 const useToggleModal = () => {
-  const [showAnalyticsModal, setShowAnalyticsModal] = useAtom(showAnalyticsModalAtom);
-  const [running, setRunning] = useAtom(isRunning);
+  const [, setShowAnalyticsModal] = useAtom(showAnalyticsModalAtom);
+  const [, setRunning] = useAtom(isRunning);
 
   // 開啟 Analytics Modal 並暫停計時器
   const handleShowAnalytics = () => {

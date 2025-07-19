@@ -1,5 +1,7 @@
 import { useAtomValue, useAtom } from 'jotai';
-import { currentTaskAtom, isRunning, showSettingModalAtom } from '@/atoms/taskAtoms';
+import { currentTaskAtom } from '@/atoms/userAtoms';
+import { isRunning } from '@/atoms/timerAtoms';
+import { showSettingModalAtom } from '@/atoms/modalAtoms';
 import { useTimer } from '@/hooks/useTimer';
 import { usePageViewLog } from '@/hooks/usePageViewLog';
 import { useToggleModal } from '@/hooks/useToggleModal';

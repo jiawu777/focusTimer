@@ -1,4 +1,4 @@
-import type { PageViewLog } from '@/atoms/taskAtoms';
+import type { PageViewLog } from '@/types/taskTypes';
 
 const useSegmentProgressBar = (logs: PageViewLog[]) => {
   if (!logs || logs.length < 2) return [];

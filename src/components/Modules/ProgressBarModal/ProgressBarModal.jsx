@@ -1,5 +1,8 @@
 import { useAtomValue, useSetAtom } from 'jotai';
-import { currentTaskAtom, showAnalyticsModalAtom, clearPageViewLogAtom } from '@/atoms/taskAtoms';
+import { clearPageViewLogAtom } from '@/atoms/taskAtoms';
+import { currentTaskAtom } from '@/atoms/userAtoms';
+import { showAnalyticsModalAtom } from '@/atoms/modalAtoms';
+import { useTimer } from '@/hooks/useTimer';
 import { useSegmentProgressBar } from '@/hooks/useSegmentProgressBar';
 import { useScheduledSegments } from '@/hooks/useScheduledSegment';
 import './ProgressBarModal.scss';
@@ -10,6 +13,7 @@ const ProgressBarModal = () => {
   const scheduledProgressBarTitle = 'Your Scheduled Progress Bar Result';
   const closeAnalyticsBtn = 'Close';
   const clearAnalyticsBtn = 'Clear';
+  const { resetTimer } = useTimer();
   const setShow = useSetAtom(showAnalyticsModalAtom);
   const workTime = useAtomValue(currentTaskAtom)?.workTimeRef || 25; // Default to 25 minutes if not set
   const breakTime = useAtomValue(currentTaskAtom)?.breakTimeRef || 5; //
@@ -76,7 +80,10 @@ const ProgressBarModal = () => {
         <div className="progressBar__btn">
           <button
             className="progressBar__btn progressBar__btn--clearAnalyticsData"
-            onClick={() => clearPageViewLog()}
+            onClick={() => {
+              clearPageViewLog();
+              resetTimer();
+            }}
           >
             {clearAnalyticsBtn}
           </button>

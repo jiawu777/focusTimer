@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react';
 import { useAtom } from 'jotai';
-import { isRunning, stopwatchAtom } from '@/atoms/taskAtoms';
+import { isRunning, stopwatchAtom } from '@/atoms/timerAtoms';
 
 const useTimer = () => {
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -31,6 +31,7 @@ const useTimer = () => {
   //重置計時器
   const resetTimer = () => {
     clearInterval(timerRef.current!);
+    setTimer(0);
     setRunning(false);
   };
 

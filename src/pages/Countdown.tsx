@@ -3,7 +3,7 @@ import { Layout, LayoutMain, LayoutModal } from '@/layout/Layout';
 import Countdown from '@/components/Modules/Countdown';
 import InputData from '@/components/Modules/InputData';
 import ProgressBarModal from '@/components/Modules/ProgressBarModal';
-import { showAnalyticsModalAtom } from '@/atoms/taskAtoms';
+import { showAnalyticsModalAtom } from '@/atoms/modalAtoms';
 
 const PageCountdown = () => {
   const showAnalyticsModal = useAtomValue(showAnalyticsModalAtom);

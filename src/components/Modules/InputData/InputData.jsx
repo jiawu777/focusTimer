@@ -1,5 +1,6 @@
 import { useAtomValue, useAtom } from 'jotai';
-import { isRunning, showSettingModalAtom } from '@/atoms/taskAtoms';
+import { isRunning } from '@/atoms/timerAtoms';
+import { showSettingModalAtom } from '@/atoms/modalAtoms';
 import { useInputData } from '@/hooks/useInputData';
 import './InputData.scss';
 
