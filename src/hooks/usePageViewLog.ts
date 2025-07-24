@@ -39,6 +39,8 @@ const usePageViewLog = (runningStatus: boolean) => {
 
   const clearPageViewLog = () => {
     setClearPageViewLog();
+    setPageViewLog({ visible: true, timestamp: Date.now() });
+    prevState.current = true;
   };
 
   return { clearPageViewLog };

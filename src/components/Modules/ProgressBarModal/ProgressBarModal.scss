@@ -12,13 +12,15 @@
     justify-content: start;
     flex-flow: column wrap;
     padding-top: 60px;
+    @include phone {
+      padding: 30px 0px;
+    }
   }
   &__wrapper {
     padding: 60px 20px 60px 20px;
     background: $colorWhite;
     display: flex;
     width: 600px;
-    height: 420px;
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
@@ -26,21 +28,8 @@
     background: #eee;
     box-shadow: 10px 10px 10px -5px #0005;
     gap: 20px;
-  }
-
-  &__timeStamp {
-    display: flex;
-    flex-flow: row nowrap;
-    font-size: 2rem;
-    width: 100%;
-    padding: 0px 20px;
-    justify-content: space-between;
-    &--start {
-      justify-content: start;
-    }
-
-    &--end {
-      justify-content: end;
+    @include phone {
+      width: 300px;
     }
   }
 
@@ -50,11 +39,17 @@
     align-items: start;
     justify-content: center;
     width: 480px;
+    @include phone {
+      width: 250px;
+    }
   }
 
   &__title {
     font-size: 2rem;
     font-weight: bold;
+    @include phone {
+      font-size: 1.5rem;
+    }
   }
 
   &__segment {
@@ -80,7 +75,17 @@
     border-color: rgba(0, 0, 0, 0.5);
     padding: 10px 10px;
     color: $colorWhite;
-    gap: 0px 10px;
+    gap: 10px 10px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-flow: row nowrap;
+    @include phone {
+      font-size: 1.5rem;
+      width: 100%;
+      padding: 5px 30px;
+      flex-flow: column nowrap;
+    }
 
     &--clearAnalyticsData {
       background: $colorOrange;
@@ -99,11 +104,17 @@
     align-items: start;
     justify-content: center;
     width: 480px;
+    @include phone {
+      width: 250px;
+    }
   }
 
   &__title {
     font-size: 2rem;
     font-weight: bold;
+    @include phone {
+      font-size: 1.5rem;
+    }
   }
 
   &__segment {
@@ -120,4 +131,29 @@
       background: darken(#f44336, 10%);
     }
   }
+}
+
+.timeStamp {
+  display: flex;
+  flex-flow: row nowrap;
+  font-size: 2rem;
+  width: 100%;
+  padding: 0px 20px;
+  justify-content: space-between;
+  @include phone {
+    font-size: 1.5rem;
+    padding: 0px 10px;
+  } 
+  &__start {
+    justify-content: start;
+  }
+
+  &__end {
+    justify-content: end;
+  }
+
+  &__block {
+    display: none;
+  }
+
 }

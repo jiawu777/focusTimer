@@ -6,7 +6,7 @@
     justify-content: center;
     align-items: center;
     flex-flow: column nowrap;
-    gap: 1rem;
+    gap: 2rem;
     &--hide {
       display: none;
     }
@@ -61,11 +61,14 @@
   }
 
   &__currentTask {
+    display: flex;
+    align-items: center;
     text-align: center;
     font-size: 5rem;
     white-space: pre-wrap;
     overflow: hidden;
     font-weight: bold;
+    height: 6rem;
     @include pad {
       font-size: 3rem;
     }
@@ -94,6 +97,10 @@
   width: 100%;
   max-width: 500px;
   font-size: 4rem;
+  @include phone {
+    font-size: 3rem;
+    padding: 5px 10px;
+  }
 
   &__wrapper {
     display: flex;
@@ -117,12 +124,16 @@
     }
   }
 
-  &__showSettingModal {
+  &__showSetTaskModal {
     background-color: $colorOrange;
     max-width: 500px;
     font-size: 4rem;
     &--hide {
       display: none;
+    }
+    @include phone {
+      font-size: 3rem;
+      padding: 5px 10px;
     }
   }
 
@@ -132,6 +143,10 @@
     font-size: 4rem;
     &--hide {
       display: none;
+    }
+    @include phone {
+      font-size: 3rem;
+      padding: 5px 10px;
     }
   }
 }

@@ -32,4 +32,20 @@ const ScheduledSegmentSchema = z.object({
   end: z.number(),
 });
 
-export { UserInfoSchema, TaskSchema, PageViewLogSchema, ScheduledSegmentSchema };
+const TimerDisplaySchema = z.object({
+  timer: z.number(),
+});
+
+const TaskDisplaySchema = z.object({
+  taskName: z.string(),
+  defaultTask: z.string().optional(),
+});
+
+export {
+  UserInfoSchema,
+  TaskSchema,
+  PageViewLogSchema,
+  ScheduledSegmentSchema,
+  TimerDisplaySchema,
+  TaskDisplaySchema,
+};

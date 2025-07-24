@@ -13,6 +13,9 @@
     }
     @include pad {
       padding: 0px 30px;
+      &--hide {
+        display: none;
+      }
     }
   }
 
@@ -20,6 +23,9 @@
     font-size: 5rem;
     color: $colorWhite;
     font-weight: bold;
+    @include phone {
+      font-size: 4rem;
+    }
   }
 
   &__timer {
@@ -37,13 +43,6 @@
     width: 100%;
     max-width: 500px;
     font-size: 4rem;
-
-    &__showSettingModal {
-      background-color: $colorOrange;
-      &--hide {
-        display: none;
-      }
-    }
   }
 
   &__currentTask {
@@ -70,12 +69,30 @@
 
   &__inputBox {
     text-align: center;
-    font-size: 3rem;
+    font-size: 2.5rem;
     white-space: pre-wrap;
     overflow: hidden;
     font-weight: bold;
     border-radius: 20px;
     border: none;
     max-width: 100%;
+    @include phone {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+.btn {
+  &__submit {
+    background-color: $colorGreen;
+    &--hover {
+      background-color: darken($colorGreen, 10%);
+    }
+  }
+  &__showSetTaskModal {
+    background-color: $colorOrange;
+    &--hide {
+      display: none;
+    }
   }
 }

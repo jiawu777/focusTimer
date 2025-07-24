@@ -1,6 +1,6 @@
 import { atom } from 'jotai';
 
-const showSettingModalAtom = atom(false);
+const showSetTaskModalAtom = atom(false);
 const showAnalyticsModalAtom = atom(false);
 
-export { showSettingModalAtom, showAnalyticsModalAtom };
+export { showSetTaskModalAtom, showAnalyticsModalAtom };
