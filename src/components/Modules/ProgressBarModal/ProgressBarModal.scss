@@ -21,6 +21,7 @@
     background: $colorWhite;
     display: flex;
     width: 600px;
+    max-width: 80vw;
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
@@ -28,8 +29,14 @@
     background: #eee;
     box-shadow: 10px 10px 10px -5px #0005;
     gap: 20px;
+
     @include phone {
       width: 300px;
+    }
+
+    @include pad {
+      padding: 30px 20px;
+      width: 500px;
     }
   }
 
@@ -39,6 +46,7 @@
     align-items: start;
     justify-content: center;
     width: 480px;
+    max-width: 80%;
     @include phone {
       width: 250px;
     }
@@ -104,6 +112,7 @@
     align-items: start;
     justify-content: center;
     width: 480px;
+    max-width: 80%;
     @include phone {
       width: 250px;
     }
@@ -143,7 +152,7 @@
   @include phone {
     font-size: 1.5rem;
     padding: 0px 10px;
-  } 
+  }
   &__start {
     justify-content: start;
   }
@@ -155,5 +164,4 @@
   &__block {
     display: none;
   }
-
 }
