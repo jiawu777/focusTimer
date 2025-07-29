@@ -3,6 +3,7 @@ import { isRunning } from '@/atoms/timerAtoms';
 import { showSetTaskModalAtom } from '@/atoms/modalAtoms';
 import { useInputData } from '@/hooks/useInputData';
 import type { InputFieldProps } from '@/types/taskTypes';
+import Button, { ButtonVariant } from '@/components/common/Button/Button';
 import './InputData.scss';
 
 const InputField = ({ type, refProp, placeholder, className, error }: InputFieldProps) => {
@@ -56,20 +57,19 @@ const InputData = () => {
           className={'input__inputBox input__inputBox--breakTime'}
           error={errors.breakTime}
         />
-        <button
+        <Button
+          variant={ButtonVariant.Submit}
           type="submit"
-          className="btn btn__submit"
         >
           Set Task
-        </button>
+        </Button>
+        <Button
+          variant={ButtonVariant.Close}
+          onClick={() => setShow(false)}
+        >
+          Close
+        </Button>
       </form>
-
-      <button
-        className="btn btn__showSetTaskModal"
-        onClick={() => setShow(false)}
-      >
-        Close
-      </button>
     </div>
   );
 };

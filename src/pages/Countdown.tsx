@@ -1,8 +1,8 @@
 import { useAtomValue } from 'jotai';
 import { Layout, LayoutMain, LayoutModal } from '@/layout/Layout';
 import Countdown from '@/components/Modules/Countdown';
-import InputData from '@/components/Modules/InputData';
-import ProgressBarModal from '@/components/Modules/ProgressBarModal';
+import InputData from '@/components/Modules/Countdown/InputData';
+import ProgressBarModal from '@/components/Modules/Countdown/ProgressBarModal';
 import { showAnalyticsModalAtom } from '@/atoms/modalAtoms';
 
 const PageCountdown = () => {

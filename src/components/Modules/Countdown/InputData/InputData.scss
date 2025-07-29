@@ -82,17 +82,3 @@
   }
 }
 
-.btn {
-  &__submit {
-    background-color: $colorGreen;
-    &--hover {
-      background-color: darken($colorGreen, 10%);
-    }
-  }
-  &__showSetTaskModal {
-    background-color: $colorOrange;
-    &--hide {
-      display: none;
-    }
-  }
-}

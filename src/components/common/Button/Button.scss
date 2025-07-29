@@ -1,0 +1,78 @@
+.btn {
+  display: flex;
+  font-size: 2rem;
+  font-weight: bold;
+  border-radius: 10px;
+  border-color: rgba(0, 0, 0, 0.5);
+  padding: 10px 10px;
+  color: $colorWhite;
+  gap: 10px 10px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-flow: row nowrap;
+  @include phone {
+    font-size: 1.5rem;
+    width: 100%;
+    padding: 5px 30px;
+    flex-flow: column nowrap;
+  }
+
+  &__wrapper {
+    display: flex;
+    width: 100%;
+    flex-flow: row nowrap;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+
+    @include phone {
+      flex-flow: column nowrap;
+    }
+  }
+
+  &__close {
+    background-color: $colorRed;
+    &--hover {
+      background-color: darken($colorRed, 10%);
+    }
+  }
+
+  &__clear {
+    background: $colorOrange;
+    &--hover {
+      background-color: darken($colorOrange, 10%);
+    }
+  }
+
+  &__submit {
+    background-color: $colorGreen;
+    &--hover {
+      background-color: darken($colorGreen, 10%);
+    }
+  }
+
+  &__showSetTaskModal {
+    background-color: $colorOrange;
+    &--hide {
+      display: none;
+    }
+  }
+
+  &__showAnalyticsModal {
+    background: $colorDeepBlue;
+    &--hide {
+      display: none;
+    }
+  }
+
+  &__toggleTimer {
+    &--off {
+      background-color: $colorDeepBlue;
+    }
+
+    &--on {
+      background-color: $colorGreen;
+    }
+  }
+}

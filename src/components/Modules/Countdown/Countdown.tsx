@@ -6,6 +6,7 @@ import { useTimer } from '@/hooks/useTimer';
 import { usePageViewLog } from '@/hooks/usePageViewLog';
 import { useToggleModal } from '@/hooks/useToggleModal';
 import { DEFAULT_TASK } from '@/constants/storage';
+import Button, { ButtonVariant } from '@/components/common/Button/Button';
 import type { TimerDisplay, TaskDisplay } from '@/types/taskTypes';
 import './Countdown.scss';
 
@@ -47,26 +48,29 @@ const Countdown = () => {
         taskName={taskName}
         defaultTask={DEFAULT_TASK}
       />
-      <div className="btn__wrapper">
-        <button
-          className={`btn btn__toggleTimer btn__toggleTimer--${running ? 'off' : 'on'}`}
+      <div className="btn btn__wrapper">
+        <Button
+          variant={ButtonVariant.ToggleTimer}
+          className={running ? 'btn__toggleTimer--on' : 'btn__toggleTimer--off'}
           onClick={toggleTimer}
         >
           {running ? 'Pause' : 'Start'}
-        </button>
+        </Button>
+        <Button
+          variant={ButtonVariant.ShowSetTaskModal}
+          className={running ? 'btn__showSetTaskModal--hide' : ''}
+          onClick={() => setShowSetTaskModal(true)}
+        >
+          Set Task
+        </Button>
+        <Button
+          variant={ButtonVariant.ShowAnalyticsModal}
+          className={running ? '' : ' btn__showAnalyticsModal--hide'}
+          onClick={handleShowAnalytics}
+        >
+          Analytics
+        </Button>
       </div>
-      <button
-        className={`btn btn__showSetTaskModal${running ? ' btn__showSetTaskModal--hide' : ''}`}
-        onClick={() => setShowSetTaskModal(true)}
-      >
-        Set Task
-      </button>
-      <button
-        className={`btn btn__showAnalyticsModal${running ? '' : ' btn__showAnalyticsModal--hide'}`}
-        onClick={handleShowAnalytics}
-      >
-        Analytics
-      </button>
     </div>
   );
 };

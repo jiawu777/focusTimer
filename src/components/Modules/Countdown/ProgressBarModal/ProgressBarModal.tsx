@@ -6,6 +6,7 @@ import { useTimer } from '@/hooks/useTimer';
 import { useSegmentProgressBar } from '@/hooks/useSegmentProgressBar';
 import { useScheduledSegments } from '@/hooks/useScheduledSegment';
 import { DEFAULT_WORKTIME, DEFAULT_BREAKTIME } from '@/constants/storage';
+import Button, { ButtonVariant } from '@/components/common/Button/Button';
 import type { TimeStampProp } from '@/types/taskTypes';
 import './ProgressBarModal.scss';
 
@@ -79,23 +80,22 @@ const ProgressBarModal = () => {
           block="scheduledProgressBar"
           stateMap={{ work: 'focus', break: 'distract' }} //work跟break的狀態映射
         />
-
-        <div className="progressBar__btn">
-          <button
-            className="progressBar__btn progressBar__btn--clearAnalyticsData"
+        <div className="btn btn__wrapper">
+          <Button
+            variant={ButtonVariant.Clear}
             onClick={() => {
               clearPageViewLog();
               resetTimer();
             }}
           >
             Clear
-          </button>
-          <button
-            className="progressBar__btn progressBar__btn--showAnalyticsModal"
+          </Button>
+          <Button
+            variant={ButtonVariant.Close}
             onClick={() => setShow(false)}
           >
             Close
-          </button>
+          </Button>
         </div>
       </div>
     </div>
