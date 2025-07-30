@@ -1,6 +1,6 @@
 .btn {
   display: flex;
-  font-size: 2rem;
+  font-size: 4rem;
   font-weight: bold;
   border-radius: 10px;
   border-color: rgba(0, 0, 0, 0.5);
@@ -12,7 +12,7 @@
   text-align: center;
   flex-flow: row nowrap;
   @include phone {
-    font-size: 1.5rem;
+    font-size: 2rem;
     width: 100%;
     padding: 5px 30px;
     flex-flow: column nowrap;
@@ -32,9 +32,9 @@
   }
 
   &__close {
-    background-color: $colorRed;
+    background-color: $colorDeepBlue;
     &--hover {
-      background-color: darken($colorRed, 10%);
+      background-color: darken($colorDeepBlue, 10%);
     }
   }
 
@@ -60,7 +60,7 @@
   }
 
   &__showAnalyticsModal {
-    background: $colorDeepBlue;
+    background: $colorOrange;
     &--hide {
       display: none;
     }
@@ -68,11 +68,11 @@
 
   &__toggleTimer {
     &--off {
-      background-color: $colorDeepBlue;
+      background-color: $colorGreen;
     }
 
     &--on {
-      background-color: $colorGreen;
+      background-color: $colorOlivine;
     }
   }
 }

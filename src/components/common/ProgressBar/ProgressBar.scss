@@ -1,0 +1,28 @@
+.progressBar {
+  &__segment {
+    display: flex;
+    font-size: 0;
+    height: 30px;
+    overflow: hidden;
+
+    // transition: width 0.3s ease;
+    &--focus {
+      background: darken(#4caf50, 10%);
+    }
+    &--distract {
+      background: darken(#f44336, 10%);
+    }
+  }
+
+  &__bar {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: start;
+    justify-content: center;
+    width: 480px;
+    max-width: 80%;
+    @include phone {
+      width: 250px;
+    }
+  }
+}
