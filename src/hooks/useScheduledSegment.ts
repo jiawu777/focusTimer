@@ -1,4 +1,12 @@
-import type { ScheduledSegment } from '@/types/taskTypes';
+import { z } from 'zod';
+
+const ScheduledSegmentSchema = z.object({
+  state: z.enum(['work', 'break']),
+  percent: z.number(),
+  start: z.number(),
+  end: z.number(),
+});
+type ScheduledSegment = z.infer<typeof ScheduledSegmentSchema>;
 
 const useScheduledSegments = (
   start: number,

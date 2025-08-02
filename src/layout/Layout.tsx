@@ -1,6 +1,6 @@
 import { use100vh } from 'react-div-100vh';
 import { useAtomValue } from 'jotai';
-import { timerStateAtom } from '@/atoms/timerAtoms';
+import { timerStateAtom } from '@/store/atoms/timerAtoms';
 import './Layout.scss';
 
 interface IProps {

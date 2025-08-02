@@ -1,7 +1,8 @@
 import { useAtomValue, useSetAtom } from 'jotai';
-import { clearPageViewLogAtom } from '@/atoms/taskAtoms';
-import { currentTaskAtom } from '@/atoms/userAtoms';
-import { showAnalyticsModalAtom } from '@/atoms/modalAtoms';
+import { z } from 'zod';
+import { clearPageViewLogAtom } from '@/store/atoms/taskAtoms';
+import { currentTaskAtom } from '@/store/atoms/userAtoms';
+import { showAnalyticsModalAtom } from '@/store/atoms/modalAtoms';
 import { useTimer } from '@/hooks/useTimer';
 import { useSegmentProgressBar } from '@/hooks/useSegmentProgressBar';
 import { useScheduledSegments } from '@/hooks/useScheduledSegment';
@@ -27,25 +28,28 @@ const ProgressBarModal = () => {
   if (!segments.length) return <div>沒有資料可顯示</div>;
 
   return (
-    <div className="progressBar__overlay">
-      <div className="progressBar__wrapper">
+    <div
+      className="progress-bar__overlay"
+      onClick={() => setShow(false)}
+    >
+      <div className="progress-bar__wrapper">
         <TimeStamp
           start={start}
           end={end}
-          block="progressBar"
+          block="progress-bar"
         />
 
-        <div className="progressBar__title">Result Progress Bar</div>
+        <div className="progress-bar__title">Result Progress Bar</div>
         <ProgressBar
           segments={segments}
-          block="progressBar"
+          block="progress-bar"
           stateMap={{ focus: 'focus', distract: 'distract', unknown: 'unknown' }}
         />
 
-        <div className="progressBar__title">Planned Progress Bar</div>
+        <div className="progress-bar__title">Planned Progress Bar</div>
         <ProgressBar
           segments={scheduledSegments}
-          block="progressBar"
+          block="progress-bar"
           stateMap={{ work: 'focus', break: 'distract' }} //work跟break的狀態映射
         />
         <div className="btn btn__wrapper">

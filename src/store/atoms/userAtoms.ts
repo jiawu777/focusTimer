@@ -1,12 +1,12 @@
 import { atom } from 'jotai';
-import type { UserInfo } from '@/types/taskTypes';
-import { UserInfoSchema } from '@/schema/schema';
 import {
   STORAGE_KEY,
   DEFAULT_TASK,
   DEFAULT_WORKTIME,
   DEFAULT_BREAKTIME,
 } from '@/constants/storage';
+import type { UserInfo } from './taskAtoms';
+import { UserInfoSchema } from './taskAtoms';
 
 // configure
 const defaultUserInfo: UserInfo = {

@@ -1,32 +1,15 @@
 import { useAtomValue, useAtom } from 'jotai';
-import { currentTaskAtom } from '@/atoms/userAtoms';
-import { isRunning } from '@/atoms/timerAtoms';
-import { showSetTaskModalAtom } from '@/atoms/modalAtoms';
+import { currentTaskAtom } from '@/store/atoms/userAtoms';
+import { isRunning } from '@/store/atoms/timerAtoms';
+import { showSetTaskModalAtom } from '@/store/atoms/modalAtoms';
 import { useTimer } from '@/hooks/useTimer';
 import { usePageViewLog } from '@/hooks/usePageViewLog';
 import { useToggleModal } from '@/hooks/useToggleModal';
 import { DEFAULT_TASK } from '@/constants/storage';
 import Button, { ButtonVariant } from '@/components/common/Button/Button';
-import type { TimerDisplay, TaskDisplay } from '@/types/taskTypes';
+import TimerDisplay from './TimerDisplay/TimerDisplay';
+import TaskDisplay from './TaskDisplay/TaskDisplay';
 import './Countdown.scss';
-
-const TimerDisplay = ({ timer }: TimerDisplay) => {
-  const min = String(Math.floor(timer / 60)).padStart(2, '0');
-  const sec = String(Math.floor(timer % 60)).padStart(2, '0');
-  return (
-    <div className="countdown__wrapper">
-      <h1 className="countdown__timer">
-        {min}:{sec}
-      </h1>
-    </div>
-  );
-};
-
-const TaskDisplay = ({ taskName, defaultTask }: TaskDisplay) => (
-  <div className="task__wrapper">
-    <h1 className="task__currentTask">{taskName || defaultTask}</h1>
-  </div>
-);
 
 const Countdown = () => {
   const { timer, running, toggleTimer } = useTimer();
@@ -39,8 +22,8 @@ const Countdown = () => {
 
   return (
     <div
-      className={`display__wrapper${runningStatus ? ' display__wrapper--grow' : ''}${
-        showSetTaskModal ? ' display__wrapper--hide' : ''
+      className={`countdown__wrapper${runningStatus ? ' countdown__wrapper--grow' : ''}${
+        showSetTaskModal ? ' countdown__wrapper--hide' : ''
       }`}
     >
       <TimerDisplay timer={timer} />

@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react';
 import { useAtom } from 'jotai';
-import { isRunning, stopwatchAtom } from '@/atoms/timerAtoms';
+import { isRunning, stopwatchAtom } from '@/store/atoms/timerAtoms';
 
 const useTimer = () => {
   const timerRef = useRef<NodeJS.Timeout | null>(null);

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useSetAtom } from 'jotai';
-import { updatePageViewAtom, clearPageViewLogAtom } from '@/atoms/taskAtoms';
+import { updatePageViewAtom, clearPageViewLogAtom } from '@/store/atoms/taskAtoms';
 import pathname from '@/router/Router';
 
 const usePageViewLog = (runningStatus: boolean) => {

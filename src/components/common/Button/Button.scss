@@ -11,8 +11,9 @@
   align-items: center;
   text-align: center;
   flex-flow: row nowrap;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   @include phone {
-    font-size: 2rem;
+    font-size: 2.5rem;
     width: 100%;
     padding: 5px 30px;
     flex-flow: column nowrap;
@@ -20,18 +21,21 @@
 
   &__wrapper {
     display: flex;
+    flex: 3 1 0%;
     width: 100%;
     flex-flow: row nowrap;
     gap: 1rem;
     justify-content: center;
-    align-items: center;
+    align-items: start;
 
     @include phone {
       flex-flow: column nowrap;
+      justify-content: start;
     }
   }
 
   &__close {
+    cursor: pointer;
     background-color: $colorDeepBlue;
     &--hover {
       background-color: darken($colorDeepBlue, 10%);
@@ -39,6 +43,7 @@
   }
 
   &__clear {
+    cursor: pointer;
     background: $colorOrange;
     &--hover {
       background-color: darken($colorOrange, 10%);
@@ -46,6 +51,7 @@
   }
 
   &__submit {
+    cursor: pointer;
     background-color: $colorGreen;
     &--hover {
       background-color: darken($colorGreen, 10%);
@@ -53,6 +59,7 @@
   }
 
   &__showSetTaskModal {
+    cursor: pointer;
     background-color: $colorOrange;
     &--hide {
       display: none;
@@ -60,6 +67,7 @@
   }
 
   &__showAnalyticsModal {
+    cursor: pointer;
     background: $colorOrange;
     &--hide {
       display: none;
@@ -67,6 +75,7 @@
   }
 
   &__toggleTimer {
+    cursor: pointer;
     &--off {
       background-color: $colorGreen;
     }

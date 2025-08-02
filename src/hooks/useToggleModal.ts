@@ -1,6 +1,6 @@
 import { useAtom } from 'jotai';
-import { isRunning } from '@/atoms/timerAtoms';
-import { showAnalyticsModalAtom } from '@/atoms/modalAtoms';
+import { isRunning } from '@/store/atoms/timerAtoms';
+import { showAnalyticsModalAtom } from '@/store/atoms/modalAtoms';
 
 const useToggleModal = () => {
   const [, setShowAnalyticsModal] = useAtom(showAnalyticsModalAtom);

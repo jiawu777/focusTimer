@@ -1,10 +1,17 @@
 import { useAtomValue, useAtom } from 'jotai';
-import { isRunning } from '@/atoms/timerAtoms';
-import { showSetTaskModalAtom } from '@/atoms/modalAtoms';
+import { isRunning } from '@/store/atoms/timerAtoms';
+import { showSetTaskModalAtom } from '@/store/atoms/modalAtoms';
 import { useInputData } from '@/hooks/useInputData';
-import type { InputFieldProps } from '@/types/taskTypes';
 import Button, { ButtonVariant } from '@/components/common/Button/Button';
 import './InputData.scss';
+
+type InputFieldProps = {
+  type: string;
+  refProp: React.RefObject<HTMLInputElement>;
+  placeholder: string;
+  className: string;
+  error?: string;
+};
 
 const InputField = ({ type, refProp, placeholder, className, error }: InputFieldProps) => {
   //1140721改成tsx

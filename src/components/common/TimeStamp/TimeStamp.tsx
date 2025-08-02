@@ -1,5 +1,10 @@
-import type { TimeStampProp } from '@/types/taskTypes';
 import './TimeStamp.scss';
+
+type TimeStampProp = {
+  start: number;
+  end: number;
+  block: string;
+};
 
 const TimeStamp = ({ start, end, block }: TimeStampProp) => {
   return (

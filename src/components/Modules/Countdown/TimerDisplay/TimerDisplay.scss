@@ -1,32 +1,32 @@
-.countdown {
+.timer-display {
   &__wrapper {
-    width: 100%;
-    justify-content: center;
-    align-items: center;
     gap: clamp(1rem, 1vh, 2rem); // 最小1rem，最大4rem，隨寬度變化
-    height: 100%;
+    width: 100%;
     display: flex;
+    flex: 4 1 0%;
+    justify-content: end;
+    align-items: center;
     flex-flow: column nowrap;
     &--hide {
       display: none;
     }
     @include pad {
       padding: 0px 30px;
+      flex: 3 1 0%;
     }
   }
-
- 
-
   &__timer {
     max-width: 100%;
     font-size: 15rem;
     font-weight: bold;
     color: $colorWhite;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+
     @include pad {
       font-size: 10rem;
     }
     @include phone {
-      font-size: 8rem;
+      font-size: 6rem;
     }
   }
 }

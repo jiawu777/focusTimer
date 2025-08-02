@@ -1,8 +1,37 @@
 import { atom } from 'jotai';
-import { Task, UserInfo, PageViewLog } from '@/types/taskTypes';
+import { z } from 'zod';
 import { STORAGE_KEY } from '@/constants/storage';
 import { userInfoAtom } from './userAtoms';
 import { showAnalyticsModalAtom } from './modalAtoms';
+
+const TaskSchema = z.object({
+  id: z.number(),
+  taskName: z.string(),
+  workTimeRef: z.number(),
+  breakTimeRef: z.number(),
+  pageViewLog: z
+    .array(
+      z.object({
+        visible: z.boolean(),
+        timestamp: z.number(),
+      })
+    )
+    .optional(),
+});
+
+const UserInfoSchema = z.object({
+  tasks: z.array(TaskSchema),
+  currentTaskId: z.number(),
+});
+
+const PageViewLogSchema = z.object({
+  visible: z.boolean(),
+  timestamp: z.number(),
+});
+
+type Task = z.infer<typeof TaskSchema>;
+type UserInfo = z.infer<typeof UserInfoSchema>;
+type PageViewLog = z.infer<typeof PageViewLogSchema>;
 
 const addTaskAtom = atom(
   null,
@@ -81,3 +110,5 @@ const updatePageViewAtom = atom(null, (get, set, log: PageViewLog) => {
 });
 
 export { addTaskAtom, clearTaskAtom, updatePageViewAtom, clearPageViewLogAtom };
+export type { Task, UserInfo, PageViewLog };
+export { TaskSchema, UserInfoSchema, PageViewLogSchema };
