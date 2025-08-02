@@ -1,6 +1,13 @@
 import { atom } from 'jotai';
 
-const showSetTaskModalAtom = atom(false);
-const showAnalyticsModalAtom = atom(false);
+const showModalAtom = atom(false);
 
-export { showSetTaskModalAtom, showAnalyticsModalAtom };
+enum ModalType {
+  ProgressBar = 'ProgressBar',
+  SetTask = 'SetTask',
+  Analytics = 'Analytics',
+  NoData = 'NoData',
+}
+const modalTypeAtom = atom<ModalType | null>(null);
+
+export { showModalAtom, modalTypeAtom, ModalType };

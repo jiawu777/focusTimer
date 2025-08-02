@@ -1,0 +1,8 @@
+.no-data__message {
+  font-size: 4rem;
+  text-align: center;
+  color: $colorBlack;
+  @include phone {
+    font-size: 2.5rem;
+  }
+}

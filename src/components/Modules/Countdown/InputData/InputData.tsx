@@ -1,6 +1,6 @@
 import { useAtomValue, useAtom } from 'jotai';
 import { isRunning } from '@/store/atoms/timerAtoms';
-import { showSetTaskModalAtom } from '@/store/atoms/modalAtoms';
+import { ModalType, showModalAtom, modalTypeAtom } from '@/store/atoms/modalAtoms';
 import { useInputData } from '@/hooks/useInputData';
 import Button, { ButtonVariant } from '@/components/common/Button/Button';
 import './InputData.scss';
@@ -30,15 +30,16 @@ const InputField = ({ type, refProp, placeholder, className, error }: InputField
   );
 };
 const InputData = () => {
-  const [show, setShow] = useAtom(showSetTaskModalAtom);
+  const [showModal, setShowModal] = useAtom(showModalAtom);
+  const [modalType, setModalType] = useAtom(modalTypeAtom);
   const runningStatus = useAtomValue(isRunning);
   const { taskNameRef, workTimeRef, breakTimeRef, errors, handleSubmit } = useInputData();
 
-  if (!show) return null;
+  if (!showModal || modalType !== ModalType.SetTask) return null;
 
   return (
     <div className={`input__wrapper ${runningStatus ? 'input__wrapper--hide' : ''}`}>
-      <h1 className="input__title">Add Task</h1>
+      <h1 className="input__title">Set Task</h1>
       <form
         className="input__form"
         onSubmit={handleSubmit}
@@ -68,11 +69,16 @@ const InputData = () => {
           variant={ButtonVariant.Submit}
           type="submit"
         >
-          Set Task
+          Set
         </Button>
         <Button
           variant={ButtonVariant.Close}
-          onClick={() => setShow(false)}
+          onClick={() => {
+            if (showModal && modalType === ModalType.SetTask) {
+              setShowModal(false);
+              setModalType(null);
+            }
+          }}
         >
           Close
         </Button>

@@ -2,7 +2,7 @@ import { atom } from 'jotai';
 import { z } from 'zod';
 import { STORAGE_KEY } from '@/constants/storage';
 import { userInfoAtom } from './userAtoms';
-import { showAnalyticsModalAtom } from './modalAtoms';
+import { showModalAtom, modalTypeAtom } from './modalAtoms';
 
 const TaskSchema = z.object({
   id: z.number(),
@@ -86,7 +86,8 @@ const clearPageViewLogAtom = atom(null, (get, set) => {
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(updateData));
   set(userInfoAtom, updateData);
-  set(showAnalyticsModalAtom, false);
+  set(modalTypeAtom, null); // Clear modal type if needed
+  set(showModalAtom, false);
 });
 
 const updatePageViewAtom = atom(null, (get, set, log: PageViewLog) => {

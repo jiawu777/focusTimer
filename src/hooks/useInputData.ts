@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { useSetAtom } from 'jotai';
 import { addTaskAtom, clearTaskAtom } from '@/store/atoms/taskAtoms';
-import { showSetTaskModalAtom } from '@/store/atoms/modalAtoms';
+import { showModalAtom, modalTypeAtom } from '@/store/atoms/modalAtoms';
 import { stopwatchAtom } from '@/store/atoms/timerAtoms';
 
 interface Errors {
@@ -18,8 +18,9 @@ const useInputData = () => {
   const [errors, setErrors] = useState<Errors>({});
   const addTask = useSetAtom(addTaskAtom);
   const clearPrevTasks = useSetAtom(clearTaskAtom);
-  const setShowSetTaskModal = useSetAtom(showSetTaskModalAtom);
+  const setShowModal = useSetAtom(showModalAtom);
   const resetTimer = useSetAtom(stopwatchAtom);
+  const setModalType = useSetAtom(modalTypeAtom);
 
   const validate = (): Errors => {
     const newErrors: Errors = {};
@@ -72,7 +73,8 @@ const useInputData = () => {
     if (workTimeRef.current) workTimeRef.current.value = '';
     if (breakTimeRef.current) breakTimeRef.current.value = '';
     setErrors({});
-    setShowSetTaskModal(false);
+    setModalType(null);
+    setShowModal(false);
     // resetTimer;
     resetTimer(0);
   };
