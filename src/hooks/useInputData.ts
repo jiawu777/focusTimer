@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { useSetAtom } from 'jotai';
-import { addTaskAtom, clearTaskAtom } from '@/store/atoms/taskAtoms';
+import { useTask } from '@/hooks/useTask';
 import { showModalAtom, modalTypeAtom } from '@/store/atoms/modalAtoms';
 import { stopwatchAtom } from '@/store/atoms/timerAtoms';
 
@@ -16,11 +16,10 @@ const useInputData = () => {
   const breakTimeRef = useRef<HTMLInputElement>(null);
 
   const [errors, setErrors] = useState<Errors>({});
-  const addTask = useSetAtom(addTaskAtom);
-  const clearPrevTasks = useSetAtom(clearTaskAtom);
   const setShowModal = useSetAtom(showModalAtom);
   const resetTimer = useSetAtom(stopwatchAtom);
   const setModalType = useSetAtom(modalTypeAtom);
+  const { setTask, resetAndSyncTask } = useTask();
 
   const validate = (): Errors => {
     const newErrors: Errors = {};
@@ -64,10 +63,10 @@ const useInputData = () => {
       setErrors({ breakTime: '休息時長不能小於0' });
       return;
     }
-    // clear prev tasks;
-    clearPrevTasks();
+    // clear prev tasks & sync localstorage;
+    resetAndSyncTask();
     // addNewTask(newTask);
-    addTask(newTask);
+    setTask(newTask);
     // reset value
     if (taskNameRef.current) taskNameRef.current.value = '';
     if (workTimeRef.current) workTimeRef.current.value = '';

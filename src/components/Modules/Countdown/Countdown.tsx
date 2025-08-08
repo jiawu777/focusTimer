@@ -1,5 +1,5 @@
 import { useAtomValue, useAtom } from 'jotai';
-import { currentTaskAtom } from '@/store/atoms/userAtoms';
+import { currentTaskAtom } from '@/store/atoms/taskAtoms';
 import { isRunning } from '@/store/atoms/timerAtoms';
 import { showModalAtom, modalTypeAtom, ModalType } from '@/store/atoms/modalAtoms';
 import { DEFAULT_TASK } from '@/constants/storage';

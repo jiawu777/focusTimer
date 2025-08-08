@@ -1,7 +1,7 @@
-import { useAtomValue, useSetAtom, useAtom } from 'jotai';
+import { useAtomValue, useAtom } from 'jotai';
 import { useEffect } from 'react';
-import { clearPageViewLogAtom } from '@/store/atoms/taskAtoms';
-import { currentTaskAtom } from '@/store/atoms/userAtoms';
+import { useTask } from '@/hooks/useTask';
+import { currentTaskAtom } from '@/store/atoms/taskAtoms';
 import { ModalType, showModalAtom, modalTypeAtom } from '@/store/atoms/modalAtoms';
 import { useTimer } from '@/hooks/useTimer';
 import { useSegmentProgressBar } from '@/hooks/useSegmentProgressBar';
@@ -22,9 +22,9 @@ const ProgressBarModal = () => {
   const workTime = useAtomValue(currentTaskAtom)?.workTimeRef || DEFAULT_WORKTIME;
   const breakTime = useAtomValue(currentTaskAtom)?.breakTimeRef || DEFAULT_BREAKTIME;
   const segments = useSegmentProgressBar(pageViewLog ?? []);
-  const clearPageViewLog = useSetAtom(clearPageViewLogAtom);
   const { resetTimer } = useTimer();
   const { resetModal } = useToggleModal();
+  const { resetPageViewLog } = useTask();
 
   const start = segments.length ? segments[0].start : 0;
   const end = segments.length ? segments[segments.length - 1].end : 0;
@@ -33,7 +33,7 @@ const ProgressBarModal = () => {
   useEffect(() => {
     const diffHours = Math.floor((end - start) / 1000 / 60 / 60);
     if (diffHours > 1) {
-      clearPageViewLog();
+      resetPageViewLog();
       resetTimer();
     }
   }, [end]);
@@ -74,7 +74,7 @@ const ProgressBarModal = () => {
         <Button
           variant={ButtonVariant.Clear}
           onClick={() => {
-            clearPageViewLog();
+            resetPageViewLog();
             resetTimer();
           }}
         >

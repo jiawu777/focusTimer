@@ -1,11 +1,9 @@
 import { useEffect, useRef } from 'react';
-import { useSetAtom } from 'jotai';
-import { updatePageViewAtom, clearPageViewLogAtom } from '@/store/atoms/taskAtoms';
+import { useTask } from '@/hooks/useTask';
 import pathname from '@/router/Router';
 
 const usePageViewLog = (runningStatus: boolean) => {
-  const setPageViewLog = useSetAtom(updatePageViewAtom);
-  const setClearPageViewLog = useSetAtom(clearPageViewLogAtom);
+  const { updatePageViewLog, resetPageViewLog } = useTask();
   const prevState = useRef<boolean | null>(null);
   const checkIsOnPage = () => {
     return (
@@ -14,6 +12,11 @@ const usePageViewLog = (runningStatus: boolean) => {
     );
   };
 
+  // 初始化頁面載入時記錄
+  useEffect(() => {
+    resetPageViewLog();
+  }, []);
+
   useEffect(() => {
     const handleChange = () => {
       const now = Date.now();
@@ -21,7 +24,7 @@ const usePageViewLog = (runningStatus: boolean) => {
       // 初次或切換才記錄
       if (prevState.current === current && runningStatus === true) return;
       else {
-        setPageViewLog({ visible: current, timestamp: now });
+        updatePageViewLog({ visible: current, timestamp: now });
         prevState.current = current;
       }
     };
@@ -35,11 +38,11 @@ const usePageViewLog = (runningStatus: boolean) => {
       document.removeEventListener('visibilitychange', handleChange);
       window.removeEventListener('popstate', handleChange);
     };
-  }, [setPageViewLog, runningStatus]);
+  }, [runningStatus]);
 
   const clearPageViewLog = () => {
-    setClearPageViewLog();
-    setPageViewLog({ visible: true, timestamp: Date.now() });
+    resetPageViewLog();
+    updatePageViewLog({ visible: true, timestamp: Date.now() });
     prevState.current = true;
   };
 
