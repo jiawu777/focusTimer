@@ -1,55 +1,60 @@
-# 🕒 Jia Pomo - 番茄時鐘計時器
+# Focus Timer 專注計時器
 
-提升專注力的番茄工作法應用，每個循環 25 分鐘，幫助你集中精神，規劃任務與休息時間。
+專注計時器（Focus Timer）是一款結合番茄鐘與專注追蹤的生產力工具，協助使用者高效管理任務、追蹤專注狀態，並以視覺化方式呈現專注與分心時間，提升自我管理能力。
 
 ---
 
-## 🚀 安裝方式
+## 專案特色
+
+- **專注計時與任務管理**：可自訂任務名稱、工作/休息時長，並支援任務切換與重設。
+- **專注狀態自動追蹤**：自動偵測頁面可見性與路由切換，精確記錄專注與分心時段。
+- **專注分析視覺化**：以進度條分段顯示專注與分心時長，幫助使用者檢視專注分布。
+- **資料持久化**：所有任務與專注紀錄皆儲存於 localStorage，資料不會因刷新而遺失。
+- **模組化狀態管理**：採用 Jotai atom 與自訂 hooks，提升程式碼可維護性與擴充性。
+- **型別安全與資料驗證**：全程 TypeScript 與 Zod schema 驗證，確保資料結構正確。
+
+---
+
+## 技術棧
+
+- React
+- TypeScript
+- Jotai
+- Zod
+- localStorage
+- React Router
+- SCSS
+- Vite
+
+---
+
+## 安裝與啟動
 
 ```bash
-git clone https://github.com/jiawu777/jia-pomo.git
-cd jia-pomo
+git clone https://github.com/你的帳號/你的專案.git
+cd 你的專案
 npm install
+npm run dev
 ```
 
-## 📘 使用方式
+## 目錄結構
 
-- 輸入任務名稱
-- 輸入任務循環次數（每次循環 25 分鐘）
-- 每次循環結束後會自動休息 5 分鐘
+```bash
+src/
+  components/         # React 元件
+  hooks/              # 自訂 hooks
+  store/atoms/        # Jotai atoms
+  store/utils/        # 工具與 localStorage 操作
+  constants/          # 常數與預設值
+  pages/              # 頁面元件
+```
 
----
+## 使用說明
 
-## 🌐 部署連結
+1. 新增任務，設定工作與休息時長。
+2. 點擊開始計時，系統自動追蹤專注狀態。
+3. 可於分析頁檢視專注與分心時間分布。
 
-🔗 [https://jia-pomo.vercel.app/](https://jia-pomo.vercel.app/)
+## License
 
----
-
-## 📌 功能特色
-
-- ⏱️ 番茄計時循環（25 分鐘工作 / 5 分鐘休息）
-- 📝 任務命名與循環設定
-- 🧼 清晰簡潔的介面
-
----
-
-## 🛠 技術棧
-
-- ⚛️ **React**
-- 🟦 **TypeScript**
-- ⚡ **Vite**
-- 🎨 **SCSS**
-- 🧪 **Jotai** 狀態管理
-
----
-
-## 📸 頁面截圖
-
-### 🌟 首頁頁面（Pomodoro）
-
-![Pomodoro](./src/assets/images/screenshots/pomo-running.png)
-
-### 📜 手機模式休息頁面
-
-![Breaktime](./src/assets/images/screenshots/breaktime-phone.png)
+MIT
