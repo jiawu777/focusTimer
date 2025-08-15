@@ -4,6 +4,13 @@
 
 ---
 
+## 📹 Demo 影片 | Demo Video
+
+![Demo PNG](demo.png)  
+[▶ Watch Full Demo Video](https://youtu.be/g2npnJD4yfA)
+
+---
+
 ## 專案特色
 
 - **專注計時與任務管理**：可自訂任務名稱、工作/休息時長，並支援任務切換與重設。
@@ -31,8 +38,9 @@
 ## 安裝與啟動
 
 ```bash
-git clone https://github.com/你的帳號/你的專案.git
-cd 你的專案
+<!-- 請切換到logTimeStamp分支 -->
+git clone https://github.com/jiawu777/focusTimer.git
+cd focusTimer
 npm install
 npm run dev
 ```
