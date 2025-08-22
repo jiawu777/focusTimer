@@ -7,7 +7,7 @@
 ## 📹 Demo 影片 | Demo Video
 
 ![Demo PNG](demo.png)  
-![Demo gif](demo.gif) 
+[▶ Watch Demo Gif](demo.gif) 
 [▶ Watch Full Demo Video](https://youtu.be/g2npnJD4yfA)
 
 ---
@@ -39,7 +39,6 @@
 ## 安裝與啟動
 
 ```bash
-<!-- 請切換到logTimeStamp分支 -->
 git clone https://github.com/jiawu777/focusTimer.git
 cd focusTimer
 npm install
