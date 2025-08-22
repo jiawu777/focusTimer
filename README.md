@@ -7,6 +7,7 @@
 ## 📹 Demo 影片 | Demo Video
 
 ![Demo PNG](demo.png)  
+![Demo gif](demo.gif) 
 [▶ Watch Full Demo Video](https://youtu.be/g2npnJD4yfA)
 
 ---
