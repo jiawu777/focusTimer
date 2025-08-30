@@ -26,7 +26,7 @@ const RouterList: Array<iRouter> = [
         to={ROUTES.Countdown}
       />
     ),
-    needLogin: true,
+    needLogin: false,
   },
   {
     path: '*',
