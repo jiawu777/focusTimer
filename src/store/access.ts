@@ -1,12 +1,13 @@
 import { atomWithStorage } from 'jotai/utils';
 
-const key_prefix = 'jia-practice';
+const key_prefix = 'jia-focusTimer';
 
 enum LOCAL_STORAGE_KEY {
   AuthToken = `${key_prefix}_auth-token`,
   Remember = `${key_prefix}_remember`,
   Fingerprint = `${key_prefix}_fingerprint`,
   Retry = `${key_prefix}_retry`,
+  UserInfo = `${key_prefix}_userInfo`,
 }
 
 /**Local storage: Auth-Token */

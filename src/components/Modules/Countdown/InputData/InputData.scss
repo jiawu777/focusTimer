@@ -21,7 +21,7 @@
 
   &__title {
     font-size: 5rem;
-    color: $colorWhite;
+    color: $colorDarkGreen;
     font-weight: bold;
     @include phone {
       font-size: 4rem;
@@ -61,11 +61,10 @@
     overflow: hidden;
     font-weight: bold;
     border-radius: 20px;
-    border: none;
+    border: 2px solid $colorDarkGreen;
     max-width: 100%;
     @include phone {
       font-size: 1.5rem;
     }
   }
 }
-

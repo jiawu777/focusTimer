@@ -1,32 +1,24 @@
 .countdown {
   &__wrapper {
     width: 100%;
+    height: 100%;
     justify-content: center;
     align-items: center;
     gap: clamp(1rem, 1vh, 2rem); // 最小1rem，最大4rem，隨寬度變化
     height: 100%;
     display: flex;
     flex-flow: column nowrap;
+    background-color: $colorAsparagus;
     &--hide {
       display: none;
     }
-    @include pad {
-      padding: 0px 30px;
-    }
   }
 
- 
-
-  &__timer {
-    max-width: 100%;
-    font-size: 15rem;
-    font-weight: bold;
-    color: $colorWhite;
-    @include pad {
-      font-size: 10rem;
-    }
-    @include phone {
-      font-size: 8rem;
-    }
+  &__buttonWrapper {
+    display: flex;
+    flex: 3 1 0%;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1rem;
   }
 }

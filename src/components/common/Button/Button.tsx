@@ -1,11 +1,6 @@
 import React from 'react';
 import './Button.scss';
 
-type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: ButtonVariant;
-  className?: string;
-};
-
 enum ButtonVariant {
   Submit = 'submit',
   Close = 'close',
@@ -17,11 +12,16 @@ enum ButtonVariant {
   ShowAnalyticsModal = 'showAnalyticsModal',
 }
 
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  variant?: ButtonVariant;
+  className?: string;
+};
+
 const Button: React.FC<ButtonProps> = ({ variant, className = '', children, ...rest }) => {
-  const variantClass = variant ? `btn__${variant}` : '';
+  const variantClass = variant ? `button__${variant}` : '';
   return (
     <button
-      className={`btn ${variantClass} ${className}`.trim()}
+      className={`button ${variantClass} ${className}`.trim()}
       {...rest}
     >
       {children}

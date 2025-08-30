@@ -1,13 +1,12 @@
 import { useAtomValue, useAtom } from 'jotai';
-import { currentTaskAtom } from '@/store/atoms/taskAtoms';
-import { isRunning } from '@/store/atoms/timerAtoms';
-import { showModalAtom, modalTypeAtom, ModalType } from '@/store/atoms/modalAtoms';
-import { DEFAULT_TASK } from '@/constants/storage';
-import Button, { ButtonVariant } from '@/components/common/Button/Button';
-import NoData from '@/components/common/NoData';
+import { openAtom, modalTypeAtom } from '@/store/modalAtoms';
+import { currentTaskAtom, DEFAULT_TASK } from '@/store/taskAtoms';
+import { isRunning } from '@/store/timerAtoms';
 import { useTimer } from '@/hooks/useTimer';
-import { usePageViewLog } from '@/hooks/usePageViewLog';
-import { useToggleModal } from '@/hooks/useToggleModal';
+import { usePageViewLog } from '@/components/Modules/Countdown/ProgressBarModal/usePageViewLog';
+import Button, { ButtonVariant } from '@/components/common/Button/Button';
+import Modal, { ModalVariant } from '@/components/common/Modal';
+import Nodata from '@/components/common/NoData';
 import ProgressBarModal from './ProgressBarModal';
 import InputData from './InputData';
 import TimerDisplay from './TimerDisplay/TimerDisplay';
@@ -16,22 +15,26 @@ import './Countdown.scss';
 
 const Countdown = () => {
   const { timer, running, toggleTimer } = useTimer();
-  const [showModal, setShowModal] = useAtom(showModalAtom);
-  const [modalType, setModalType] = useAtom(modalTypeAtom);
   const { taskName } = useAtomValue(currentTaskAtom);
   const runningStatus = useAtomValue(isRunning);
-  const { handleShowAnalytics } = useToggleModal();
+  const [open, setOpen] = useAtom(openAtom);
+  const [modalVariant, setModalVariant] = useAtom(modalTypeAtom);
 
   usePageViewLog(runningStatus);
 
   return (
     <>
-      {showModal && modalType === ModalType.Analytics && <ProgressBarModal />}
-      {showModal && modalType === ModalType.SetTask && <InputData />}
-      {showModal && modalType === ModalType.NoData && <NoData />}
+      {open && (
+        <Modal>
+          {modalVariant === ModalVariant.NoData && <Nodata />}
+          {modalVariant === ModalVariant.SetTask && <InputData />}
+          {modalVariant === ModalVariant.ShowAnalytics && <ProgressBarModal />}
+        </Modal>
+      )}
+
       <div
         className={`countdown__wrapper${runningStatus ? ' countdown__wrapper--grow' : ''}${
-          showModal ? ' countdown__wrapper--hide' : ''
+          open ? ' countdown__wrapper--hide' : ''
         }`}
       >
         <TimerDisplay timer={timer} />
@@ -39,29 +42,31 @@ const Countdown = () => {
           taskName={taskName}
           defaultTask={DEFAULT_TASK}
         />
-        <div className="btn btn__wrapper">
+        <div className="countdown__buttonWrapper">
           <Button
             variant={ButtonVariant.ToggleTimer}
-            className={running ? 'btn__toggleTimer--on' : 'btn__toggleTimer--off'}
+            className={running ? 'button__toggleTimer--on' : 'button__toggleTimer--off'}
             onClick={toggleTimer}
           >
             {running ? 'Pause' : 'Start'}
           </Button>
           <Button
             variant={ButtonVariant.ShowSetTaskModal}
-            className={running ? 'btn__showSetTaskModal--hide' : ''}
+            className={running ? 'button__showSetTaskModal--hide' : ''}
             onClick={() => {
-              setModalType(ModalType.SetTask);
-              setShowModal(true);
+              setModalVariant(ModalVariant.SetTask);
+              setOpen(true);
             }}
           >
             Set Task
           </Button>
           <Button
             variant={ButtonVariant.ShowAnalyticsModal}
-            className={running ? '' : ' btn__showAnalyticsModal--hide'}
+            className={running ? '' : ' button__showAnalyticsModal--hide'}
             onClick={() => {
-              handleShowAnalytics();
+              toggleTimer();
+              setOpen(true);
+              setModalVariant(ModalVariant.ShowAnalytics);
             }}
           >
             Analytics

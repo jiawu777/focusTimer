@@ -1,19 +1,39 @@
-import { ReactNode, FC } from 'react';
+import { FC } from 'react';
+import { useAtom } from 'jotai';
+import { openAtom } from '@/store/modalAtoms';
+import Button, { ButtonVariant } from '../Button/Button';
 import './Modal.scss';
 
-interface ModalProps {
-  children: ReactNode;
+enum ModalVariant {
+  SetTask,
+  ShowAnalytics,
+  NoData,
 }
 
-const Modal: FC<ModalProps> = ({ children }) => (
-  <div className="modal__overlay">
-    <div
-      className="modal__wrapper"
-      onClick={(e) => e.stopPropagation()}
-    >
-      {children}
+type ModalType = { variant?: ModalVariant; children?: React.ReactNode };
+
+const Modal: FC<ModalType> = ({ children }) => {
+  const [, setOpen] = useAtom(openAtom);
+
+  return (
+    <div className="modal__overlay">
+      <div
+        className="modal__wrapper"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {children}
+        <Button
+          variant={ButtonVariant.Close}
+          onClick={() => {
+            setOpen(false);
+          }}
+        >
+          Close
+        </Button>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default Modal;
+export { ModalVariant };

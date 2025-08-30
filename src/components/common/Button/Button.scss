@@ -1,4 +1,4 @@
-.btn {
+.button {
   display: flex;
   font-size: 4rem;
   font-weight: bold;
@@ -12,9 +12,10 @@
   text-align: center;
   flex-flow: row nowrap;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+
   @include phone {
-    font-size: 2.5rem;
     width: 100%;
+    font-size: 2.5rem;
     padding: 5px 30px;
     flex-flow: column nowrap;
   }
@@ -77,11 +78,11 @@
   &__toggleTimer {
     cursor: pointer;
     &--off {
-      background-color: $colorGreen;
+      background-color: $colorGold;
     }
 
     &--on {
-      background-color: $colorOlivine;
+      background-color: $colorDeepBlue;
     }
   }
 }

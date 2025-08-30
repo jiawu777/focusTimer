@@ -1,8 +1,9 @@
-import { useAtomValue, useAtom } from 'jotai';
-import { isRunning } from '@/store/atoms/timerAtoms';
-import { ModalType, showModalAtom, modalTypeAtom } from '@/store/atoms/modalAtoms';
-import { useInputData } from '@/hooks/useInputData';
+import { useAtomValue, useAtom, useSetAtom } from 'jotai';
+import { isRunning } from '@/store/timerAtoms';
+import { openAtom, modalTypeAtom } from '@/store/modalAtoms';
+import { ModalVariant } from '@/components/common/Modal';
 import Button, { ButtonVariant } from '@/components/common/Button/Button';
+import { useInputData } from './useInputData';
 import './InputData.scss';
 
 type InputFieldProps = {
@@ -29,13 +30,14 @@ const InputField = ({ type, refProp, placeholder, className, error }: InputField
     </>
   );
 };
+
 const InputData = () => {
-  const [showModal, setShowModal] = useAtom(showModalAtom);
+  const [open, setOpen] = useAtom(openAtom);
   const [modalType, setModalType] = useAtom(modalTypeAtom);
   const runningStatus = useAtomValue(isRunning);
   const { taskNameRef, workTimeRef, breakTimeRef, errors, handleSubmit } = useInputData();
 
-  if (!showModal || modalType !== ModalType.SetTask) return null;
+  if (!open || modalType !== ModalVariant.SetTask) return null;
 
   return (
     <div className={`input__wrapper ${runningStatus ? 'input__wrapper--hide' : ''}`}>
@@ -54,14 +56,14 @@ const InputData = () => {
         <InputField
           type="number"
           refProp={workTimeRef}
-          placeholder="Enter WorkTime (minutes)"
+          placeholder="Enter WorkTime (min)"
           className={'input__inputBox input__inputBox--workTime'}
           error={errors.workTime}
         />
         <InputField
           type="text"
           refProp={breakTimeRef}
-          placeholder="Enter BreakTime (minutes)"
+          placeholder="Enter BreakTime (min)"
           className={'input__inputBox input__inputBox--breakTime'}
           error={errors.breakTime}
         />
@@ -70,17 +72,6 @@ const InputData = () => {
           type="submit"
         >
           Set
-        </Button>
-        <Button
-          variant={ButtonVariant.Close}
-          onClick={() => {
-            if (showModal && modalType === ModalType.SetTask) {
-              setShowModal(false);
-              setModalType(null);
-            }
-          }}
-        >
-          Close
         </Button>
       </form>
     </div>
